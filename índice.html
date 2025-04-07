@@ -23,34 +23,41 @@
 </head>
 <body>
     <h1>¡Te he troleado!</h1>
+    <button onclick="activarPantallaCompleta()">entrar</button>
     <script>
-        // Activar pantalla completa automáticamente
+        // Función para activar pantalla completa al hacer clic en el botón
         function activarPantallaCompleta() {
             if (document.documentElement.requestFullscreen) {
                 document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) {
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) {
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) {
+                document.documentElement.msRequestFullscreen();
             }
         }
 
-        // Detectar cambios en pantalla completa y reactivarla si el usuario sale
-        document.addEventListener('fullscreenchange', () => {
-            if (!document.fullscreenElement) {
-                activarPantallaCompleta(); // Volver a pantalla completa
+        // Mostrar notificaciones cada 10 segundos si el usuario ha dado permiso
+        function mostrarNotificacion() {
+            if (Notification.permission === "granted") {
+                new Notification("¡Te he troleado!");
+            }
+        }
+
+        // Pedir permiso para notificaciones al cargar la página
+        document.addEventListener("DOMContentLoaded", () => {
+            if (Notification.permission !== "granted") {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") {
+                        setInterval(mostrarNotificacion, 10000);
+                    }
+                });
+            } else {
+                setInterval(mostrarNotificacion, 10000);
             }
         });
-
-        // Iniciar pantalla completa al cargar la página
-        activarPantallaCompleta();
-
-        // Mostrar notificaciones cada 10 segundos
-        if (Notification && Notification.permission !== "granted") {
-            Notification.requestPermission().then(permission => {
-                if (permission === "granted") {
-                    setInterval(() => {
-                        new Notification("¡Te he troleado!");
-                    }, 10000);
-                }
-            });
-        }
     </script>
 </body>
 </html>
+

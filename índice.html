@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Te he troleado!</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>¡Te he troleado!</h1>
+    <script>
+        // Activar pantalla completa automáticamente
+        function activarPantallaCompleta() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            }
+        }
+
+        // Detectar cambios en pantalla completa y reactivarla si el usuario sale
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) {
+                activarPantallaCompleta(); // Volver a pantalla completa
+            }
+        });
+
+        // Iniciar pantalla completa al cargar la página
+        activarPantallaCompleta();
+
+        // Mostrar notificaciones cada 10 segundos
+        if (Notification && Notification.permission !== "granted") {
+            Notification.requestPermission().then(permission => {
+                if (permission === "granted") {
+                    setInterval(() => {
+                        new Notification("¡Te he troleado!");
+                    }, 10000);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

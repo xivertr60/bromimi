@@ -9,6 +9,7 @@
             margin: 0;
             background-color: white;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -19,44 +20,48 @@
             font-size: 3em;
             color: red;
         }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <h1>¡Te he troleado!</h1>
-    <button onclick="activarPantallaCompleta()">entrar</button>
+    <button id="fullscreenButton" onclick="activarPantallaCompleta()">Pantalla completa + Notificaciones</button>
+
     <script>
-        // Función para activar pantalla completa al hacer clic en el botón
+        // Activar pantalla completa con interacción del usuario
         function activarPantallaCompleta() {
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) {
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) {
-                document.documentElement.webkitRequestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) {
-                document.documentElement.msRequestFullscreen();
+            let elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) { 
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) { 
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { 
+                elem.msRequestFullscreen();
             }
+
+            solicitarPermisosNotificaciones(); // Llamar a función de notificaciones
         }
 
-        // Mostrar notificaciones cada 10 segundos si el usuario ha dado permiso
-        function mostrarNotificacion() {
-            if (Notification.permission === "granted") {
-                new Notification("¡Te he troleado!");
-            }
-        }
-
-        // Pedir permiso para notificaciones al cargar la página
-        document.addEventListener("DOMContentLoaded", () => {
-            if (Notification.permission !== "granted") {
+        // Solicitar permisos de notificación y activarlas cada 10 segundos
+        function solicitarPermisosNotificaciones() {
+            if ("Notification" in window) {
                 Notification.requestPermission().then(permission => {
                     if (permission === "granted") {
-                        setInterval(mostrarNotificacion, 10000);
+                        setInterval(() => {
+                            new Notification("¡Te he troleado!");
+                        }, 10000);
                     }
                 });
-            } else {
-                setInterval(mostrarNotificacion, 10000);
             }
-        });
+        }
     </script>
 </body>
 </html>

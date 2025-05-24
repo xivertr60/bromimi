@@ -18,6 +18,7 @@
     display: flex;
     align-items: center;
     z-index: 10;
+    position: relative;
   }
   #inputUrl {
     flex-grow: 1;
@@ -143,17 +144,17 @@
     z-index: 99;
   }
 
-  /* Overlay control parental */
+  /* Overlay control parental (cubre TODO) */
   #parentalOverlay {
     display: none;
     position: fixed;
-    top: 50px; /* mismo que iframe */
-    left: 0;
+    top: 0; left: 0;
     width: 100vw;
-    height: calc(100vh - 50px);
-    background: url('https://i.imgur.com/QdH0BDJ.png') center center no-repeat; /* Cambia esta URL por la imagen que quieras */
+    height: 100vh;
+    background: url('https://i.imgur.com/QdH0BDJ.png') center center no-repeat;
     background-size: contain;
-    z-index: 150;
+    background-color: white;
+    z-index: 9999;
   }
   #parentalOverlay.active {
     display: block;
@@ -178,6 +179,16 @@
   <div class="card" data-url="https://www.minijuegos.com">
     <img src="https://cdn.minijuegos.com/img/brand/logo-footer.svg" alt="Minijuegos" />
     <div class="desc">Minijuegos - Juegos gratis para todos</div>
+    <button class="maximize-btn">Max</button>
+  </div>
+  <div class="card" data-url="https://character.ai">
+    <img src="https://character.ai/favicon.ico" alt="Character AI" />
+    <div class="desc">Character AI - Chatbots inteligentes</div>
+    <button class="maximize-btn">Max</button>
+  </div>
+  <div class="card" data-url="https://chatango.com">
+    <img src="https://www.chatango.com/favicon.ico" alt="Chatango" />
+    <div class="desc">Chatango - Chat público y grupos</div>
     <button class="maximize-btn">Max</button>
   </div>
 </div>
@@ -274,11 +285,14 @@
   });
 
   btnToggleParental.addEventListener('click', () => {
-    // Alternar visibilidad de overlay control parental solo si iframe está visible
-    if (iframe.style.display === 'block') {
-      parentalOverlay.classList.toggle('active');
-    }
+    parentalOverlay.classList.toggle('active');
   });
+
+  showHome();
+</script>
+</body>
+</html>
+
 
   showHome();
 </script>

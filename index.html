@@ -3,166 +3,98 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mini Navegador Mejorado</title>
+  <title>Mini Navegador</title>
   <style>
-    /* Reset básico */
-    * {
-      box-sizing: border-box;
-    }
     body, html {
       margin: 0; padding: 0; height: 100%;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #fafafa;
-      color: #222;
+      font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
+      background: #f0f0f0;
     }
     header {
-      background-color: #0056b3;
+      background-color: #333;
       color: white;
-      padding: 15px 20px;
+      padding: 10px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
-    header input[type="text"] {
+    #inputUrl {
       flex-grow: 1;
-      min-width: 180px;
-      padding: 10px 12px;
+      font-size: 1rem;
+      padding: 8px;
+      border: none;
+      border-radius: 4px;
+      margin-right: 8px;
+    }
+    button {
+      padding: 8px 15px;
       font-size: 1rem;
       border: none;
-      border-radius: 6px;
-      outline-offset: 2px;
-      outline-color: #007bff;
-      transition: box-shadow 0.3s;
-    }
-    header input[type="text"]:focus {
-      box-shadow: 0 0 6px 2px #3399ffaa;
-    }
-    header button {
+      border-radius: 4px;
       background-color: #007bff;
-      border: none;
       color: white;
-      padding: 10px 18px;
-      font-size: 1rem;
-      border-radius: 6px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
-      flex-shrink: 0;
+      margin-right: 8px;
       user-select: none;
-      min-width: 80px;
     }
-    header button:hover {
+    button:hover {
       background-color: #0056b3;
     }
-
-    main {
-      flex-grow: 1;
-      display: flex;
-      background: white;
-      margin: 20px auto;
-      max-width: 1100px;
-      width: 90%;
-      border-radius: 12px;
-      box-shadow: 0 8px 24px rgb(0 0 0 / 0.1);
-      overflow: hidden;
-      flex-direction: column;
-    }
-
     #content {
-      padding: 25px 30px;
+      flex-grow: 1;
+      padding: 20px;
       display: flex;
       flex-wrap: wrap;
-      gap: 24px;
+      gap: 20px;
       justify-content: center;
       align-items: flex-start;
-      background: #f9f9f9;
-      min-height: 400px;
+      background: white;
       overflow-y: auto;
-      border-bottom-left-radius: 12px;
-      border-bottom-right-radius: 12px;
     }
-
     .card {
       width: 180px;
-      background: white;
-      color: #222;
-      border-radius: 12px;
-      box-shadow: 0 6px 15px rgb(0 0 0 / 0.12);
+      background: #007bff;
+      color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgb(0 0 0 / 0.2);
       cursor: pointer;
       user-select: none;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: background-color 0.3s;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 15px 10px;
-      height: 240px;
+      height: 220px;
     }
     .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 12px 25px rgb(0 0 0 / 0.2);
+      background: #0056b3;
     }
     .card img {
       width: 100px;
       height: 100px;
       object-fit: contain;
-      margin-bottom: 14px;
-      border-radius: 10px;
-      background: #fff;
-      padding: 6px;
-      box-shadow: 0 2px 8px rgb(0 0 0 / 0.05);
+      margin-bottom: 10px;
+      border-radius: 8px;
+      background: white;
+      padding: 5px;
     }
     .card .desc {
       text-align: center;
-      font-weight: 600;
+      font-weight: bold;
       font-size: 1.1rem;
       flex-grow: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 8px;
-      color: #444;
+      padding: 0 5px;
     }
-
     iframe {
-      width: 100%;
       flex-grow: 1;
       border: none;
+      width: 100%;
+      height: 100%;
       display: none;
-      min-height: 500px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 12px 20px;
-      font-size: 0.9rem;
-      color: #666;
-      background-color: #f0f0f0;
-      user-select: none;
-    }
-
-    /* Responsive */
-    @media (max-width: 600px) {
-      header {
-        flex-direction: column;
-        gap: 10px;
-      }
-      header input[type="text"] {
-        min-width: 100%;
-      }
-      header button {
-        width: 100%;
-      }
-      main {
-        width: 95%;
-        margin: 15px auto;
-      }
-      #content {
-        justify-content: center;
-      }
     }
   </style>
 </head>
@@ -173,32 +105,26 @@
     <button id="btnHome">Inicio</button>
   </header>
 
-  <main>
-    <div id="content">
-      <div class="card" data-url="https://www.friv.com">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Friv_logo.svg/1200px-Friv_logo.svg.png" alt="Friv" />
-        <div class="desc">Friv - Juegos en línea gratuitos</div>
-      </div>
-      <div class="card" data-url="https://www.minijuegos.com">
-        <img src="https://cdn.minijuegos.com/img/brand/logo-footer.svg" alt="Minijuegos" />
-        <div class="desc">Minijuegos - Juegos gratis para todos</div>
-      </div>
-      <div class="card" data-url="https://character.ai">
-        <img src="https://character.ai/favicon.ico" alt="Character AI" />
-        <div class="desc">Character AI - Chatbots inteligentes</div>
-      </div>
-      <div class="card" data-url="https://chatango.com">
-        <img src="https://www.chatango.com/favicon.ico" alt="Chatango" />
-        <div class="desc">Chatango - Chat público y grupos</div>
-      </div>
+  <div id="content">
+    <div class="card" data-url="https://www.friv.com">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Friv_logo.svg/1200px-Friv_logo.svg.png" alt="Friv" />
+      <div class="desc">Friv - Juegos en línea gratuitos</div>
     </div>
+    <div class="card" data-url="https://www.minijuegos.com">
+      <img src="https://cdn.minijuegos.com/img/brand/logo-footer.svg" alt="Minijuegos" />
+      <div class="desc">Minijuegos - Juegos gratis para todos</div>
+    </div>
+    <div class="card" data-url="https://character.ai">
+      <img src="https://character.ai/favicon.ico" alt="Character AI" />
+      <div class="desc">Character AI - Chatbots inteligentes</div>
+    </div>
+    <div class="card" data-url="https://chatango.com">
+      <img src="https://www.chatango.com/favicon.ico" alt="Chatango" />
+      <div class="desc">Chatango - Chat público y grupos</div>
+    </div>
+  </div>
 
-    <iframe id="iframe" src=""></iframe>
-  </main>
-
-  <footer>
-    Mini Navegador &copy; 2025 | Creado por Ti
-  </footer>
+  <iframe id="iframe" src=""></iframe>
 
   <script>
     const input = document.getElementById('inputUrl');

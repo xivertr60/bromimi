@@ -1,281 +1,287 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mini Navegador</title>
-  <style>
-    body, html {
-      margin: 0; padding: 0; height: 100%;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      background: #f0f0f0;
-      overflow: hidden;
-    }
-    header {
-      background-color: #333;
-      color: white;
-      padding: 10px;
-      display: flex;
-      align-items: center;
-      z-index: 10;
-    }
-    #inputUrl {
-      flex-grow: 1;
-      font-size: 1rem;
-      padding: 8px;
-      border: none;
-      border-radius: 4px;
-      margin-right: 8px;
-    }
-    button {
-      padding: 8px 15px;
-      font-size: 1rem;
-      border: none;
-      border-radius: 4px;
-      background-color: #007bff;
-      color: white;
-      cursor: pointer;
-      margin-right: 8px;
-      user-select: none;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    #content {
-      flex-grow: 1;
-      padding: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-      align-items: flex-start;
-      background: white;
-      overflow-y: auto;
-      transition: opacity 0.3s;
-    }
-    .card {
-      position: relative;
-      width: 180px;
-      background: #007bff;
-      color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgb(0 0 0 / 0.2);
-      cursor: pointer;
-      user-select: none;
-      transition: background-color 0.3s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 15px 10px;
-      height: 220px;
-    }
-    .card:hover {
-      background: #0056b3;
-    }
-    .card img {
-      width: 100px;
-      height: 100px;
-      object-fit: contain;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      background: white;
-      padding: 5px;
-    }
-    .card .desc {
-      text-align: center;
-      font-weight: bold;
-      font-size: 1.1rem;
-      flex-grow: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 5px;
-    }
-    .maximize-btn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: rgba(255,255,255,0.8);
-      border: none;
-      border-radius: 4px;
-      padding: 4px 8px;
-      font-size: 0.8rem;
-      cursor: pointer;
-      user-select: none;
-      color: #007bff;
-      font-weight: bold;
-      transition: background-color 0.3s;
-      z-index: 5;
-    }
-    .maximize-btn:hover {
-      background-color: #ddd;
-    }
-    iframe {
-      flex-grow: 1;
-      border: none;
-      width: 100%;
-      height: 100%;
-      display: none;
-      transition: all 0.3s ease;
-    }
-    /* Modo maximizado */
-    body.maximized {
-      height: 100vh;
-      overflow: hidden;
-      display: block;
-    }
-    body.maximized header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-    }
-    body.maximized #content {
-      display: none !important;
-    }
-    body.maximized iframe {
-      display: block !important;
-      position: fixed;
-      top: 50px; /* altura header */
-      left: 0;
-      width: 100vw;
-      height: calc(100vh - 50px);
-      z-index: 99;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mini Navegador con Control Parental</title>
+<style>
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    font-family: Arial, sans-serif;
+    background: #f0f0f0;
+    overflow: hidden;
+  }
+  header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+  }
+  #inputUrl {
+    flex-grow: 1;
+    font-size: 1rem;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    margin-right: 8px;
+  }
+  button {
+    padding: 8px 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    margin-right: 8px;
+    user-select: none;
+  }
+  button:hover {
+    background-color: #0056b3;
+  }
+  #content {
+    height: calc(100vh - 50px);
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
+    background: white;
+    overflow-y: auto;
+    transition: opacity 0.3s;
+  }
+  .card {
+    position: relative;
+    width: 180px;
+    background: #007bff;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgb(0 0 0 / 0.2);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 10px;
+    height: 220px;
+  }
+  .card:hover {
+    background: #0056b3;
+  }
+  .card img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background: white;
+    padding: 5px;
+  }
+  .card .desc {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+  }
+  .maximize-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255,255,255,0.8);
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    user-select: none;
+    color: #007bff;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    z-index: 5;
+  }
+  .maximize-btn:hover {
+    background-color: #ddd;
+  }
+  iframe {
+    display: none;
+    border: none;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease;
+  }
+  /* Modo maximizado */
+  body.maximized {
+    height: 100vh;
+    overflow: hidden;
+    display: block;
+  }
+  body.maximized header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
+  body.maximized #content {
+    display: none !important;
+  }
+  body.maximized iframe {
+    display: block !important;
+    position: fixed;
+    top: 50px; /* altura header */
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 50px);
+    z-index: 99;
+  }
+
+  /* Overlay control parental */
+  #parentalOverlay {
+    display: none;
+    position: fixed;
+    top: 50px; /* mismo que iframe */
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 50px);
+    background: url('https://i.imgur.com/QdH0BDJ.png') center center no-repeat; /* Cambia esta URL por la imagen que quieras */
+    background-size: contain;
+    z-index: 150;
+  }
+  #parentalOverlay.active {
+    display: block;
+  }
+</style>
 </head>
 <body>
-  <header>
-    <input type="text" id="inputUrl" placeholder="Escribe URL o término de búsqueda" />
-    <button id="btnGo">Ir</button>
-    <button id="btnHome">Inicio</button>
-    <button id="btnExitMax" style="display:none; background:#dc3545;">Cerrar Max</button>
-  </header>
+<header>
+  <input type="text" id="inputUrl" placeholder="Escribe URL o término de búsqueda" />
+  <button id="btnGo">Ir</button>
+  <button id="btnHome">Inicio</button>
+  <button id="btnExitMax" style="display:none; background:#dc3545;">Cerrar Max</button>
+  <button id="btnToggleParental" style="background:#28a745;">Toggle Control Parental</button>
+</header>
 
-  <div id="content">
-    <div class="card" data-url="https://www.friv.com">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Friv_logo.svg/1200px-Friv_logo.svg.png" alt="Friv" />
-      <div class="desc">Friv - Juegos en línea gratuitos</div>
-      <button class="maximize-btn">Max</button>
-    </div>
-    <div class="card" data-url="https://www.minijuegos.com">
-      <img src="https://cdn.minijuegos.com/img/brand/logo-footer.svg" alt="Minijuegos" />
-      <div class="desc">Minijuegos - Juegos gratis para todos</div>
-      <button class="maximize-btn">Max</button>
-    </div>
-    <div class="card" data-url="https://character.ai">
-      <img src="https://character.ai/favicon.ico" alt="Character AI" />
-      <div class="desc">Character AI - Chatbots inteligentes</div>
-      <button class="maximize-btn">Max</button>
-    </div>
-    <div class="card" data-url="https://chatango.com">
-      <img src="https://www.chatango.com/favicon.ico" alt="Chatango" />
-      <div class="desc">Chatango - Chat público y grupos</div>
-      <button class="maximize-btn">Max</button>
-    </div>
+<div id="content">
+  <div class="card" data-url="https://www.friv.com">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Friv_logo.svg/1200px-Friv_logo.svg.png" alt="Friv" />
+    <div class="desc">Friv - Juegos en línea gratuitos</div>
+    <button class="maximize-btn">Max</button>
   </div>
+  <div class="card" data-url="https://www.minijuegos.com">
+    <img src="https://cdn.minijuegos.com/img/brand/logo-footer.svg" alt="Minijuegos" />
+    <div class="desc">Minijuegos - Juegos gratis para todos</div>
+    <button class="maximize-btn">Max</button>
+  </div>
+</div>
 
-  <iframe id="iframe" src=""></iframe>
+<iframe id="iframe" src=""></iframe>
+<div id="parentalOverlay"></div>
 
-  <script>
-    const input = document.getElementById('inputUrl');
-    const btnGo = document.getElementById('btnGo');
-    const btnHome = document.getElementById('btnHome');
-    const iframe = document.getElementById('iframe');
-    const content = document.getElementById('content');
-    const btnExitMax = document.getElementById('btnExitMax');
+<script>
+  const input = document.getElementById('inputUrl');
+  const btnGo = document.getElementById('btnGo');
+  const btnHome = document.getElementById('btnHome');
+  const iframe = document.getElementById('iframe');
+  const content = document.getElementById('content');
+  const btnExitMax = document.getElementById('btnExitMax');
+  const btnToggleParental = document.getElementById('btnToggleParental');
+  const parentalOverlay = document.getElementById('parentalOverlay');
 
-    function isValidUrl(string) {
-      try {
-        new URL(string);
-        return true;
-      } catch (_) {
-        return false;
-      }
+  function isValidUrl(string) {
+    try {
+      new URL(string);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function showHome() {
+    document.body.classList.remove('maximized');
+    btnExitMax.style.display = 'none';
+    parentalOverlay.classList.remove('active');
+    iframe.style.display = 'none';
+    content.style.display = 'flex';
+    input.value = '';
+    iframe.src = '';
+  }
+
+  function loadPage(url) {
+    iframe.src = url;
+    iframe.style.display = 'block';
+    content.style.display = 'none';
+    document.body.classList.remove('maximized');
+    btnExitMax.style.display = 'none';
+    parentalOverlay.classList.remove('active');
+  }
+
+  function loadPageMax(url) {
+    iframe.src = url;
+    iframe.style.display = 'block';
+    content.style.display = 'none';
+    document.body.classList.add('maximized');
+    btnExitMax.style.display = 'inline-block';
+    parentalOverlay.classList.remove('active');
+  }
+
+  btnGo.addEventListener('click', () => {
+    let text = input.value.trim();
+    if (!text) return;
+
+    let urlToLoad = '';
+    if (isValidUrl(text)) {
+      urlToLoad = text;
+    } else if (isValidUrl('https://' + text)) {
+      urlToLoad = 'https://' + text;
+    } else {
+      const query = encodeURIComponent(text);
+      urlToLoad = `https://www.google.com/search?q=${query}`;
     }
 
-    function showHome() {
-      document.body.classList.remove('maximized');
-      btnExitMax.style.display = 'none';
-      iframe.style.display = 'none';
-      content.style.display = 'flex';
-      input.value = '';
-      iframe.src = '';
+    loadPage(urlToLoad);
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      btnGo.click();
     }
+  });
 
-    function loadPage(url) {
-      iframe.src = url;
-      iframe.style.display = 'block';
-      content.style.display = 'none';
-      document.body.classList.remove('maximized');
-      btnExitMax.style.display = 'none';
-    }
+  btnHome.addEventListener('click', showHome);
+  btnExitMax.addEventListener('click', showHome);
 
-    function loadPageMax(url) {
-      iframe.src = url;
-      iframe.style.display = 'block';
-      content.style.display = 'none';
-      document.body.classList.add('maximized');
-      btnExitMax.style.display = 'inline-block';
-    }
+  content.querySelectorAll('.card').forEach(card => {
+    const url = card.getAttribute('data-url');
 
-    btnGo.addEventListener('click', () => {
-      let text = input.value.trim();
-      if (!text) return;
-
-      let urlToLoad = '';
-      if (isValidUrl(text)) {
-        urlToLoad = text;
-      } else if (isValidUrl('https://' + text)) {
-        urlToLoad = 'https://' + text;
-      } else {
-        const query = encodeURIComponent(text);
-        urlToLoad = `https://www.google.com/search?q=${query}`;
-      }
-
-      loadPage(urlToLoad);
+    card.addEventListener('click', (e) => {
+      if (e.target.classList.contains('maximize-btn')) return;
+      loadPage(url);
     });
 
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        btnGo.click();
-      }
+    const btnMax = card.querySelector('.maximize-btn');
+    btnMax.addEventListener('click', (e) => {
+      e.stopPropagation();
+      loadPageMax(url);
     });
+  });
 
-    btnHome.addEventListener('click', showHome);
+  btnToggleParental.addEventListener('click', () => {
+    // Alternar visibilidad de overlay control parental solo si iframe está visible
+    if (iframe.style.display === 'block') {
+      parentalOverlay.classList.toggle('active');
+    }
+  });
 
-    btnExitMax.addEventListener('click', showHome);
-
-    content.querySelectorAll('.card').forEach(card => {
-      const url = card.getAttribute('data-url');
-
-      // Click en la tarjeta carga normal
-      card.addEventListener('click', (e) => {
-        // Evitar click en el botón max
-        if (e.target.classList.contains('maximize-btn')) return;
-        loadPage(url);
-      });
-
-      // Botón maximizar
-      const btnMax = card.querySelector('.maximize-btn');
-      btnMax.addEventListener('click', (e) => {
-        e.stopPropagation();
-        loadPageMax(url);
-      });
-    });
-
-    // Mostrar inicio al cargar la página
-    showHome();
-  </script>
+  showHome();
+</script>
 </body>
 </html>
 
-
-    // Mostrar inicio al cargar la página
-    showHome();
-  </script>
-</body>
-</html>

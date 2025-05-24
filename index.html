@@ -20,16 +20,13 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: opacity 0.3s ease;
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 10000;
-      opacity: 1;
+      transition: top 0.3s ease;
     }
     header.hidden {
-      opacity: 0;
-      pointer-events: none;
-      user-select: none;
+      top: -50px; /* desliza hacia arriba para ocultar */
     }
     #inputUrl {
       flex-grow: 1;
@@ -53,77 +50,9 @@
     button:hover {
       background-color: #0056b3;
     }
-    #content {
-      flex-grow: 1;
-      padding: 80px 20px 20px 20px; /* espacio para header fijo */
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-      align-items: flex-start;
-      background: white;
-      overflow-y: auto;
-      transition: filter 0.3s ease;
-    }
-    .card {
-      width: 180px;
-      background: #007bff;
-      color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgb(0 0 0 / 0.2);
-      cursor: pointer;
-      user-select: none;
-      transition: background-color 0.3s;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 15px 10px;
-      height: 220px;
-    }
-    .card:hover {
-      background: #0056b3;
-    }
-    .card img {
-      width: 100px;
-      height: 100px;
-      object-fit: contain;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      background: white;
-      padding: 5px;
-    }
-    .card .desc {
-      text-align: center;
-      font-weight: bold;
-      font-size: 1.1rem;
-      flex-grow: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 5px;
-    }
-    iframe {
-      flex-grow: 1;
-      border: none;
-      width: 100%;
-      height: 100%;
-      display: none;
-      transition: all 0.4s ease;
-    }
-    iframe.maximized {
-      position: fixed !important;
-      top: 0; left: 0; right: 0; bottom: 0;
-      width: 100vw !important;
-      height: 100vh !important;
-      z-index: 9999;
-      display: block !important;
-      border-radius: 0 !important;
-      box-shadow: none !important;
-      background: white;
-    }
     #showHeaderBtn {
       position: fixed;
-      top: 40px;
+      top: 5px;
       right: 10px;
       background: black;
       color: white;
@@ -134,9 +63,9 @@
       cursor: pointer;
       user-select: none;
       z-index: 10001;
-      display: none;
       font-size: 1.1rem;
       line-height: 1;
+      display: none;
       transition: opacity 0.3s ease;
     }
     #showHeaderBtn:hover {
@@ -149,199 +78,55 @@
     <input type="text" id="inputUrl" placeholder="Escribe URL o término de búsqueda" />
     <button id="btnGo">Ir</button>
     <button id="btnHome">Inicio</button>
-    <button id="btnMaximize" title="Maximizar/Restaurar pantalla">Maximizar</button>
-    <button id="btnFullscreen" title="Pantalla completa real">Fullscreen</button>
   </header>
 
   <button id="showHeaderBtn" title="Mostrar barra de búsqueda">^</button>
 
-  <div id="content">
-    <div class="card" data-url="https://www.friv.com">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Friv_logo.svg/1200px-Friv_logo.svg.png" alt="Friv" />
-      <div class="desc">Friv - Juegos en línea gratuitos</div>
-    </div>
-    <div class="card" data-url="https://www.minijuegos.com">
-      <img src="https://cdn.minijuegos.com/img/brand/logo-footer.svg" alt="Minijuegos" />
-      <div class="desc">Minijuegos - Juegos gratis para todos</div>
-    </div>
-    <div class="card" data-url="https://character.ai">
-      <img src="https://character.ai/favicon.ico" alt="Character AI" />
-      <div class="desc">Character AI - Chatbots inteligentes</div>
-    </div>
-    <div class="card" data-url="https://chatango.com">
-      <img src="https://www.chatango.com/favicon.ico" alt="Chatango" />
-      <div class="desc">Chatango - Chat público y grupos</div>
-    </div>
-  </div>
-
-  <iframe id="iframe" src=""></iframe>
-
   <script>
-    const input = document.getElementById('inputUrl');
-    const btnGo = document.getElementById('btnGo');
-    const btnHome = document.getElementById('btnHome');
-    const btnMaximize = document.getElementById('btnMaximize');
-    const btnFullscreen = document.getElementById('btnFullscreen');
-    const iframe = document.getElementById('iframe');
-    const content = document.getElementById('content');
     const headerBar = document.getElementById('headerBar');
     const showHeaderBtn = document.getElementById('showHeaderBtn');
 
-    let isMaximized = false;
-
-    function isValidUrl(string) {
-      try {
-        new URL(string);
-        return true;
-      } catch (_) {
-        return false;
-      }
-    }
-
-    function showHome() {
-      exitFullscreenIfActive();
-      iframe.style.display = 'none';
-      iframe.classList.remove('maximized');
-      content.style.display = 'flex';
-      input.value = '';
-      iframe.src = '';
-      if (isMaximized) toggleMaximize();
-    }
-
-    function loadPage(url) {
-      iframe.src = url;
-      iframe.style.display = 'block';
-      content.style.display = 'none';
-    }
-
-    btnGo.addEventListener('click', () => {
-      let text = input.value.trim();
-      if (!text) return;
-
-      let urlToLoad = '';
-      if (isValidUrl(text)) {
-        urlToLoad = text;
-      } else if (isValidUrl('https://' + text)) {
-        urlToLoad = 'https://' + text;
-      } else {
-        const query = encodeURIComponent(text);
-        urlToLoad = `https://www.google.com/search?q=${query}`;
-      }
-
-      loadPage(urlToLoad);
-    });
-
-    input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        btnGo.click();
-      }
-    });
-
-    btnHome.addEventListener('click', showHome);
-
-    content.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('click', () => {
-        const url = card.getAttribute('data-url');
-        loadPage(url);
-      });
-    });
-
-    btnMaximize.addEventListener('click', toggleMaximize);
-
-    function toggleMaximize() {
-      if (isMaximized) {
-        iframe.classList.remove('maximized');
-        if (content.style.display === 'none') {
-          iframe.style.display = 'block';
-          content.style.display = 'none';
-        } else {
-          iframe.style.display = 'none';
-          content.style.display = 'flex';
-        }
-        btnMaximize.textContent = 'Maximizar';
-        isMaximized = false;
-      } else {
-        iframe.classList.add('maximized');
-        iframe.style.display = 'block';
-        content.style.display = 'none';
-        btnMaximize.textContent = 'Restaurar';
-        isMaximized = true;
-      }
-    }
-
-    btnFullscreen.addEventListener('click', () => {
-      if (!document.fullscreenElement) {
-        requestIframeFullscreen();
-      } else {
-        exitFullscreenIfActive();
-      }
-    });
-
-    function requestIframeFullscreen() {
-      if (iframe.requestFullscreen) {
-        iframe.requestFullscreen();
-      } else if (iframe.webkitRequestFullscreen) { /* Safari */
-        iframe.webkitRequestFullscreen();
-      } else if (iframe.msRequestFullscreen) { /* IE11 */
-        iframe.msRequestFullscreen();
-      } else {
-        alert('Tu navegador no soporta pantalla completa para iframes.');
-      }
-    }
-
-    function exitFullscreenIfActive() {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) { /* Safari */
-        document.webkitExitFullscreen();
-      } else if (document.msExitFullscreen) { /* IE11 */
-        document.msExitFullscreen();
-      }
-    }
-
-    // Detectar cambio fullscreen para cambiar texto del botón
-    document.addEventListener('fullscreenchange', () => {
-      if (document.fullscreenElement === iframe) {
-        btnFullscreen.textContent = 'Salir Fullscreen';
-      } else {
-        btnFullscreen.textContent = 'Fullscreen';
-      }
-    });
-
-    // Mostrar/ocultar header según posición del mouse (zona superior)
     let hideTimeout;
+
+    // Ocultar la barra y mostrar botón
+    function hideHeader() {
+      headerBar.classList.add('hidden');
+      showHeaderBtn.style.display = 'block';
+    }
+
+    // Mostrar barra y ocultar botón
+    function showHeader() {
+      headerBar.classList.remove('hidden');
+      showHeaderBtn.style.display = 'none';
+    }
+
+    // Al mover el mouse cerca de arriba, mostrar barra y quitar botón
     window.addEventListener('mousemove', (e) => {
       if (e.clientY <= 50) {
         clearTimeout(hideTimeout);
-        if (headerBar.classList.contains('hidden')) {
-          headerBar.classList.remove('hidden');
-          showHeaderBtn.style.display = 'none';
-        }
+        showHeader();
       } else {
+        // Esperar 1.5s para ocultar barra si mouse lejos de arriba
         if (!headerBar.classList.contains('hidden')) {
           clearTimeout(hideTimeout);
           hideTimeout = setTimeout(() => {
-            headerBar.classList.add('hidden');
-            showHeaderBtn.style.display = 'block';
+            hideHeader();
           }, 1500);
         }
       }
     });
 
+    // Al hacer click en botón mostrar barra
     showHeaderBtn.addEventListener('click', () => {
-      headerBar.classList.remove('hidden');
-      showHeaderBtn.style.display = 'none';
+      showHeader();
     });
 
+    // Al cargar la página, ocultar barra tras 2 segundos
     window.addEventListener('load', () => {
       hideTimeout = setTimeout(() => {
-        headerBar.classList.add('hidden');
-        showHeaderBtn.style.display = 'block';
+        hideHeader();
       }, 2000);
     });
-
-    showHome();
   </script>
 </body>
 </html>
-

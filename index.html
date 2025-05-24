@@ -2,63 +2,92 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Visor de Enlaces</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mini Navegador</title>
   <style>
-    body {
-      font-family: sans-serif;
-      padding: 2rem;
-      background: #f0f0f0;
+    body, html {
+      margin: 0; padding: 0; height: 100%;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
     }
-    h1 {
-      text-align: center;
+    header {
+      background-color: #333;
+      color: white;
+      padding: 10px;
+      display: flex;
+      align-items: center;
     }
-    input {
-      width: 80%;
-      padding: 0.5rem;
+    #inputUrl {
+      flex-grow: 1;
       font-size: 1rem;
+      padding: 8px;
+      border: none;
+      border-radius: 4px;
+      margin-right: 8px;
     }
-    button {
-      padding: 0.6rem 1rem;
-      margin-left: 0.5rem;
+    #btnGo {
+      padding: 8px 15px;
       font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+      background-color: #007bff;
+      color: white;
       cursor: pointer;
     }
     iframe {
-      margin-top: 2rem;
-      border: 1px solid #ccc;
+      flex-grow: 1;
+      border: none;
       width: 100%;
-      height: 80vh;
-    }
-    .warning {
-      margin-top: 1rem;
-      color: red;
+      height: 100%;
     }
   </style>
 </head>
 <body>
-  <h1>Visor de Enlaces</h1>
-  <p>Pega un link a una web (que permita ser embebida):</p>
-  <input type="text" id="urlInput" placeholder="https://ejemplo.com" />
-  <button onclick="loadURL()">Cargar</button>
-  <div class="warning" id="warning"></div>
-  <iframe id="viewer" src=""></iframe>
+  <header>
+    <input type="text" id="inputUrl" placeholder="Escribe URL o término de búsqueda" />
+    <button id="btnGo">Ir</button>
+  </header>
+  <iframe id="iframe" src=""></iframe>
 
   <script>
-    function loadURL() {
-      const url = document.getElementById("urlInput").value;
-      const viewer = document.getElementById("viewer");
-      const warning = document.getElementById("warning");
+    const input = document.getElementById('inputUrl');
+    const btn = document.getElementById('btnGo');
+    const iframe = document.getElementById('iframe');
 
-      if (!url.startsWith("http://") && !url.startsWith("https://")) {
-        warning.textContent = "El enlace debe empezar con http:// o https://";
-        viewer.src = "";
-        return;
+    function isValidUrl(string) {
+      try {
+        new URL(string);
+        return true;
+      } catch (_) {
+        return false;
       }
-
-      viewer.src = url;
-      warning.textContent = "Si no ves la página, probablemente el sitio no permite ser embebido.";
     }
+
+    function loadPage() {
+      let text = input.value.trim();
+      if (!text) return;
+
+      // Si es URL sin protocolo, añadir https://
+      if (isValidUrl(text)) {
+        iframe.src = text;
+      } else if (isValidUrl('https://' + text)) {
+        iframe.src = 'https://' + text;
+      } else {
+        // No es URL, buscar en Google
+        const query = encodeURIComponent(text);
+        iframe.src = `https://www.google.com/search?q=${query}`;
+      }
+    }
+
+    btn.addEventListener('click', loadPage);
+
+    // También permite buscar con Enter en el input
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        loadPage();
+      }
+    });
   </script>
 </body>
 </html>

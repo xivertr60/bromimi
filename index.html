@@ -11,6 +11,7 @@
       display: flex;
       flex-direction: column;
       background: #f0f0f0;
+      overflow: hidden;
     }
     header {
       background-color: #333;
@@ -18,6 +19,7 @@
       padding: 10px;
       display: flex;
       align-items: center;
+      z-index: 10;
     }
     #inputUrl {
       flex-grow: 1;
@@ -51,8 +53,10 @@
       align-items: flex-start;
       background: white;
       overflow-y: auto;
+      transition: opacity 0.3s;
     }
     .card {
+      position: relative;
       width: 180px;
       background: #007bff;
       color: white;
@@ -89,12 +93,57 @@
       justify-content: center;
       padding: 0 5px;
     }
+    .maximize-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(255,255,255,0.8);
+      border: none;
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      user-select: none;
+      color: #007bff;
+      font-weight: bold;
+      transition: background-color 0.3s;
+      z-index: 5;
+    }
+    .maximize-btn:hover {
+      background-color: #ddd;
+    }
     iframe {
       flex-grow: 1;
       border: none;
       width: 100%;
       height: 100%;
       display: none;
+      transition: all 0.3s ease;
+    }
+    /* Modo maximizado */
+    body.maximized {
+      height: 100vh;
+      overflow: hidden;
+      display: block;
+    }
+    body.maximized header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    body.maximized #content {
+      display: none !important;
+    }
+    body.maximized iframe {
+      display: block !important;
+      position: fixed;
+      top: 50px; /* altura header */
+      left: 0;
+      width: 100vw;
+      height: calc(100vh - 50px);
+      z-index: 99;
     }
   </style>
 </head>
@@ -103,24 +152,29 @@
     <input type="text" id="inputUrl" placeholder="Escribe URL o término de búsqueda" />
     <button id="btnGo">Ir</button>
     <button id="btnHome">Inicio</button>
+    <button id="btnExitMax" style="display:none; background:#dc3545;">Cerrar Max</button>
   </header>
 
   <div id="content">
     <div class="card" data-url="https://www.friv.com">
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Friv_logo.svg/1200px-Friv_logo.svg.png" alt="Friv" />
       <div class="desc">Friv - Juegos en línea gratuitos</div>
+      <button class="maximize-btn">Max</button>
     </div>
     <div class="card" data-url="https://www.minijuegos.com">
       <img src="https://cdn.minijuegos.com/img/brand/logo-footer.svg" alt="Minijuegos" />
       <div class="desc">Minijuegos - Juegos gratis para todos</div>
+      <button class="maximize-btn">Max</button>
     </div>
     <div class="card" data-url="https://character.ai">
       <img src="https://character.ai/favicon.ico" alt="Character AI" />
       <div class="desc">Character AI - Chatbots inteligentes</div>
+      <button class="maximize-btn">Max</button>
     </div>
     <div class="card" data-url="https://chatango.com">
       <img src="https://www.chatango.com/favicon.ico" alt="Chatango" />
       <div class="desc">Chatango - Chat público y grupos</div>
+      <button class="maximize-btn">Max</button>
     </div>
   </div>
 
@@ -132,6 +186,7 @@
     const btnHome = document.getElementById('btnHome');
     const iframe = document.getElementById('iframe');
     const content = document.getElementById('content');
+    const btnExitMax = document.getElementById('btnExitMax');
 
     function isValidUrl(string) {
       try {
@@ -143,6 +198,8 @@
     }
 
     function showHome() {
+      document.body.classList.remove('maximized');
+      btnExitMax.style.display = 'none';
       iframe.style.display = 'none';
       content.style.display = 'flex';
       input.value = '';
@@ -153,6 +210,16 @@
       iframe.src = url;
       iframe.style.display = 'block';
       content.style.display = 'none';
+      document.body.classList.remove('maximized');
+      btnExitMax.style.display = 'none';
+    }
+
+    function loadPageMax(url) {
+      iframe.src = url;
+      iframe.style.display = 'block';
+      content.style.display = 'none';
+      document.body.classList.add('maximized');
+      btnExitMax.style.display = 'inline-block';
     }
 
     btnGo.addEventListener('click', () => {
@@ -180,12 +247,32 @@
 
     btnHome.addEventListener('click', showHome);
 
+    btnExitMax.addEventListener('click', showHome);
+
     content.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('click', () => {
-        const url = card.getAttribute('data-url');
+      const url = card.getAttribute('data-url');
+
+      // Click en la tarjeta carga normal
+      card.addEventListener('click', (e) => {
+        // Evitar click en el botón max
+        if (e.target.classList.contains('maximize-btn')) return;
         loadPage(url);
       });
+
+      // Botón maximizar
+      const btnMax = card.querySelector('.maximize-btn');
+      btnMax.addEventListener('click', (e) => {
+        e.stopPropagation();
+        loadPageMax(url);
+      });
     });
+
+    // Mostrar inicio al cargar la página
+    showHome();
+  </script>
+</body>
+</html>
+
 
     // Mostrar inicio al cargar la página
     showHome();

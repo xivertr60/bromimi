@@ -48,29 +48,46 @@
       flex-wrap: wrap;
       gap: 20px;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       background: white;
       overflow-y: auto;
     }
     .card {
       width: 180px;
-      height: 120px;
       background: #007bff;
       color: white;
       border-radius: 10px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      font-weight: bold;
-      font-size: 1.1rem;
       box-shadow: 0 4px 8px rgb(0 0 0 / 0.2);
       cursor: pointer;
       user-select: none;
       transition: background-color 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px 10px;
+      height: 220px;
     }
     .card:hover {
       background: #0056b3;
+    }
+    .card img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      background: white;
+      padding: 5px;
+    }
+    .card .desc {
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 5px;
     }
     iframe {
       flex-grow: 1;
@@ -89,10 +106,22 @@
   </header>
 
   <div id="content">
-    <div class="card" data-url="https://www.friv.com">Friv</div>
-    <div class="card" data-url="https://www.minijuegos.com">Minijuegos</div>
-    <div class="card" data-url="https://character.ai">Character AI</div>
-    <div class="card" data-url="https://chatango.com">Chatango</div>
+    <div class="card" data-url="https://www.friv.com">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Friv_logo.svg/1200px-Friv_logo.svg.png" alt="Friv" />
+      <div class="desc">Friv - Juegos en línea gratuitos</div>
+    </div>
+    <div class="card" data-url="https://www.minijuegos.com">
+      <img src="https://cdn.minijuegos.com/img/brand/logo-footer.svg" alt="Minijuegos" />
+      <div class="desc">Minijuegos - Juegos gratis para todos</div>
+    </div>
+    <div class="card" data-url="https://character.ai">
+      <img src="https://character.ai/favicon.ico" alt="Character AI" />
+      <div class="desc">Character AI - Chatbots inteligentes</div>
+    </div>
+    <div class="card" data-url="https://chatango.com">
+      <img src="https://www.chatango.com/favicon.ico" alt="Chatango" />
+      <div class="desc">Chatango - Chat público y grupos</div>
+    </div>
   </div>
 
   <iframe id="iframe" src=""></iframe>
@@ -151,7 +180,6 @@
 
     btnHome.addEventListener('click', showHome);
 
-    // Cuando haces clic en las cards, carga la url en iframe
     content.querySelectorAll('.card').forEach(card => {
       card.addEventListener('click', () => {
         const url = card.getAttribute('data-url');

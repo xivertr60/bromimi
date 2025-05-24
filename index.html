@@ -10,6 +10,7 @@
       font-family: Arial, sans-serif;
       display: flex;
       flex-direction: column;
+      background: #f0f0f0;
     }
     header {
       background-color: #333;
@@ -26,7 +27,7 @@
       border-radius: 4px;
       margin-right: 8px;
     }
-    #btnGo {
+    button {
       padding: 8px 15px;
       font-size: 1rem;
       border: none;
@@ -34,12 +35,49 @@
       background-color: #007bff;
       color: white;
       cursor: pointer;
+      margin-right: 8px;
+      user-select: none;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #content {
+      flex-grow: 1;
+      padding: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+      background: white;
+      overflow-y: auto;
+    }
+    .card {
+      width: 180px;
+      height: 120px;
+      background: #007bff;
+      color: white;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 8px rgb(0 0 0 / 0.2);
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s;
+    }
+    .card:hover {
+      background: #0056b3;
     }
     iframe {
       flex-grow: 1;
       border: none;
       width: 100%;
       height: 100%;
+      display: none;
     }
   </style>
 </head>
@@ -47,13 +85,24 @@
   <header>
     <input type="text" id="inputUrl" placeholder="Escribe URL o término de búsqueda" />
     <button id="btnGo">Ir</button>
+    <button id="btnHome">Inicio</button>
   </header>
+
+  <div id="content">
+    <div class="card" data-url="https://www.friv.com">Friv</div>
+    <div class="card" data-url="https://www.minijuegos.com">Minijuegos</div>
+    <div class="card" data-url="https://character.ai">Character AI</div>
+    <div class="card" data-url="https://chatango.com">Chatango</div>
+  </div>
+
   <iframe id="iframe" src=""></iframe>
 
   <script>
     const input = document.getElementById('inputUrl');
-    const btn = document.getElementById('btnGo');
+    const btnGo = document.getElementById('btnGo');
+    const btnHome = document.getElementById('btnHome');
     const iframe = document.getElementById('iframe');
+    const content = document.getElementById('content');
 
     function isValidUrl(string) {
       try {
@@ -64,30 +113,55 @@
       }
     }
 
-    function loadPage() {
+    function showHome() {
+      iframe.style.display = 'none';
+      content.style.display = 'flex';
+      input.value = '';
+      iframe.src = '';
+    }
+
+    function loadPage(url) {
+      iframe.src = url;
+      iframe.style.display = 'block';
+      content.style.display = 'none';
+    }
+
+    btnGo.addEventListener('click', () => {
       let text = input.value.trim();
       if (!text) return;
 
-      // Si es URL sin protocolo, añadir https://
+      let urlToLoad = '';
       if (isValidUrl(text)) {
-        iframe.src = text;
+        urlToLoad = text;
       } else if (isValidUrl('https://' + text)) {
-        iframe.src = 'https://' + text;
+        urlToLoad = 'https://' + text;
       } else {
-        // No es URL, buscar en Google
         const query = encodeURIComponent(text);
-        iframe.src = `https://www.google.com/search?q=${query}`;
+        urlToLoad = `https://www.google.com/search?q=${query}`;
       }
-    }
 
-    btn.addEventListener('click', loadPage);
+      loadPage(urlToLoad);
+    });
 
-    // También permite buscar con Enter en el input
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
-        loadPage();
+        btnGo.click();
       }
     });
+
+    btnHome.addEventListener('click', showHome);
+
+    // Cuando haces clic en las cards, carga la url en iframe
+    content.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('click', () => {
+        const url = card.getAttribute('data-url');
+        loadPage(url);
+      });
+    });
+
+    // Mostrar inicio al cargar la página
+    showHome();
   </script>
 </body>
 </html>
+

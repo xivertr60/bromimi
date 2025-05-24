@@ -121,10 +121,9 @@
       box-shadow: none !important;
       background: white;
     }
-    /* Botón pequeño para mostrar la barra cuando está oculta */
     #showHeaderBtn {
       position: fixed;
-      top: 40px; /* justo debajo de la barra */
+      top: 40px;
       right: 10px;
       background: black;
       color: white;
@@ -135,7 +134,7 @@
       cursor: pointer;
       user-select: none;
       z-index: 10001;
-      display: none; /* inicialmente oculto */
+      display: none;
       font-size: 1.1rem;
       line-height: 1;
       transition: opacity 0.3s ease;
@@ -151,6 +150,7 @@
     <button id="btnGo">Ir</button>
     <button id="btnHome">Inicio</button>
     <button id="btnMaximize" title="Maximizar/Restaurar pantalla">Maximizar</button>
+    <button id="btnFullscreen" title="Pantalla completa real">Fullscreen</button>
   </header>
 
   <button id="showHeaderBtn" title="Mostrar barra de búsqueda">^</button>
@@ -181,13 +181,13 @@
     const btnGo = document.getElementById('btnGo');
     const btnHome = document.getElementById('btnHome');
     const btnMaximize = document.getElementById('btnMaximize');
+    const btnFullscreen = document.getElementById('btnFullscreen');
     const iframe = document.getElementById('iframe');
     const content = document.getElementById('content');
     const headerBar = document.getElementById('headerBar');
     const showHeaderBtn = document.getElementById('showHeaderBtn');
 
     let isMaximized = false;
-    let hideTimeout;
 
     function isValidUrl(string) {
       try {
@@ -199,6 +199,7 @@
     }
 
     function showHome() {
+      exitFullscreenIfActive();
       iframe.style.display = 'none';
       iframe.classList.remove('maximized');
       content.style.display = 'flex';
@@ -268,7 +269,47 @@
       }
     }
 
+    btnFullscreen.addEventListener('click', () => {
+      if (!document.fullscreenElement) {
+        requestIframeFullscreen();
+      } else {
+        exitFullscreenIfActive();
+      }
+    });
+
+    function requestIframeFullscreen() {
+      if (iframe.requestFullscreen) {
+        iframe.requestFullscreen();
+      } else if (iframe.webkitRequestFullscreen) { /* Safari */
+        iframe.webkitRequestFullscreen();
+      } else if (iframe.msRequestFullscreen) { /* IE11 */
+        iframe.msRequestFullscreen();
+      } else {
+        alert('Tu navegador no soporta pantalla completa para iframes.');
+      }
+    }
+
+    function exitFullscreenIfActive() {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) { /* Safari */
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) { /* IE11 */
+        document.msExitFullscreen();
+      }
+    }
+
+    // Detectar cambio fullscreen para cambiar texto del botón
+    document.addEventListener('fullscreenchange', () => {
+      if (document.fullscreenElement === iframe) {
+        btnFullscreen.textContent = 'Salir Fullscreen';
+      } else {
+        btnFullscreen.textContent = 'Fullscreen';
+      }
+    });
+
     // Mostrar/ocultar header según posición del mouse (zona superior)
+    let hideTimeout;
     window.addEventListener('mousemove', (e) => {
       if (e.clientY <= 50) {
         clearTimeout(hideTimeout);
@@ -277,7 +318,6 @@
           showHeaderBtn.style.display = 'none';
         }
       } else {
-        // Oculta header tras 1.5s si no estamos en la zona superior
         if (!headerBar.classList.contains('hidden')) {
           clearTimeout(hideTimeout);
           hideTimeout = setTimeout(() => {
@@ -288,13 +328,11 @@
       }
     });
 
-    // Botón para mostrar la barra manualmente
     showHeaderBtn.addEventListener('click', () => {
       headerBar.classList.remove('hidden');
       showHeaderBtn.style.display = 'none';
     });
 
-    // Al cargar, ocultamos la barra automáticamente después de 2 segundos
     window.addEventListener('load', () => {
       hideTimeout = setTimeout(() => {
         headerBar.classList.add('hidden');
@@ -302,7 +340,6 @@
       }, 2000);
     });
 
-    // Mostrar inicio al cargar la página
     showHome();
   </script>
 </body>

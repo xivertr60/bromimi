@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visor de Enlaces</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+      background: #f0f0f0;
+    }
+    h1 {
+      text-align: center;
+    }
+    input {
+      width: 80%;
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+    button {
+      padding: 0.6rem 1rem;
+      margin-left: 0.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    iframe {
+      margin-top: 2rem;
+      border: 1px solid #ccc;
+      width: 100%;
+      height: 80vh;
+    }
+    .warning {
+      margin-top: 1rem;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h1>Visor de Enlaces</h1>
+  <p>Pega un link a una web (que permita ser embebida):</p>
+  <input type="text" id="urlInput" placeholder="https://ejemplo.com" />
+  <button onclick="loadURL()">Cargar</button>
+  <div class="warning" id="warning"></div>
+  <iframe id="viewer" src=""></iframe>
+
+  <script>
+    function loadURL() {
+      const url = document.getElementById("urlInput").value;
+      const viewer = document.getElementById("viewer");
+      const warning = document.getElementById("warning");
+
+      if (!url.startsWith("http://") && !url.startsWith("https://")) {
+        warning.textContent = "El enlace debe empezar con http:// o https://";
+        viewer.src = "";
+        return;
+      }
+
+      viewer.src = url;
+      warning.textContent = "Si no ves la página, probablemente el sitio no permite ser embebido.";
+    }
+  </script>
+</body>
+</html>

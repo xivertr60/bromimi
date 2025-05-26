@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
+  <title>Login y Registro Bonito</title>
+  <link rel="stylesheet" href="main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="main">
+    <div class="container a-container" id="a-container">
+      <form id="a-form" class="form">
+        <h2 class="form_title title">Crear Cuenta</h2>
+        <span class="form__span">O usa tu email para registrarte</span>
+        <input class="form__input" type="text" id="regName" placeholder="Nombre" required>
+        <input class="form__input" type="email" id="regEmail" placeholder="Email" required>
+        <input class="form__input" type="password" id="regPass" placeholder="Contraseña" required>
+        <div class="captcha" id="register-captcha"></div>
+        <input class="form__input" type="text" id="regCaptcha" placeholder="Responde el CAPTCHA" required>
+        <button type="submit" class="form__button button submit">REGISTRARSE</button>
+      </form>
+    </div>
+    <div class="container b-container" id="b-container">
+      <form id="b-form" class="form">
+        <h2 class="form_title title">Iniciar Sesión</h2>
+        <span class="form__span">O usa tu cuenta de email</span>
+        <input class="form__input" type="email" id="loginEmail" placeholder="Email" required>
+        <input class="form__input" type="password" id="loginPass" placeholder="Contraseña" required>
+        <div class="captcha" id="login-captcha"></div>
+        <input class="form__input" type="text" id="loginCaptcha" placeholder="Responde el CAPTCHA" required>
+        <a href="#" class="form__link">¿Olvidaste tu contraseña?</a>
+        <button type="submit" class="form__button button submit">INGRESAR</button>
+      </form>
+    </div>
+    <div class="switch" id="switch-cnt">
+      <div class="switch__circle"></div>
+      <div class="switch__circle switch__circle--t"></div>
+      <div class="switch__container" id="switch-c1">
+        <h2 class="switch__title title">¡Bienvenido de nuevo!</h2>
+        <p class="switch__description description">Para mantenerte conectado, por favor inicia sesión con tu información personal</p>
+        <button class="switch__button button switch-btn" id="toSignin">INGRESAR</button>
+      </div>
+      <div class="switch__container is-hidden" id="switch-c2">
+        <h2 class="switch__title title">¡Hola, Amigo!</h2>
+        <p class="switch__description description">Introduce tus datos personales y comienza tu viaje con nosotros</p>
+        <button class="switch__button button switch-btn" id="toSignup">REGISTRARSE</button>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Verificación -->
+  <div class="modal" id="verifyModal">
+    <div class="modal-content">
+      <span class="close" id="closeVerify">&times;</span>
+      <h2>Verifica tu correo</h2>
+      <p>Ingresa el código enviado a tu correo electrónico</p>
+      <input type="text" id="verificationCode" placeholder="Código de verificación" />
+      <button id="verifyBtn" class="button">Verificar</button>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>

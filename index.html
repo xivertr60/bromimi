@@ -1,301 +1,109 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Mini Navegador</title>
-<style>
-  body, html {
-    margin: 0; padding: 0; height: 100%;
-    font-family: Arial, sans-serif;
-    background: #f0f0f0;
-    overflow: hidden;
-  }
-  header {
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    z-index: 10;
-    position: relative;
-  }
-  #inputUrl {
-    flex-grow: 1;
-    font-size: 1rem;
-    padding: 8px;
-    border: none;
-    border-radius: 4px;
-    margin-right: 8px;
-  }
-  button {
-    padding: 8px 15px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    margin-right: 8px;
-    user-select: none;
-  }
-  button:hover {
-    background-color: #0056b3;
-  }
-  #content {
-    height: calc(100vh - 50px);
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    align-items: flex-start;
-    background: white;
-    overflow-y: auto;
-    transition: opacity 0.3s;
-  }
-  .card {
-    position: relative;
-    width: 180px;
-    background: #007bff;
-    color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgb(0 0 0 / 0.2);
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.3s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 15px 10px;
-    height: 220px;
-  }
-  .card:hover {
-    background: #0056b3;
-  }
-  .card img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    background: white;
-    padding: 5px;
-  }
-  .card .desc {
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.1rem;
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 5px;
-  }
-  .maximize-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: rgba(255,255,255,0.8);
-    border: none;
-    border-radius: 4px;
-    padding: 4px 8px;
-    font-size: 0.8rem;
-    cursor: pointer;
-    user-select: none;
-    color: #007bff;
-    font-weight: bold;
-    transition: background-color 0.3s;
-    z-index: 5;
-  }
-  .maximize-btn:hover {
-    background-color: #ddd;
-  }
-  iframe {
-    display: none;
-    border: none;
-    width: 100%;
-    height: 100%;
-    transition: all 0.3s ease;
-  }
-  /* Modo maximizado */
-  body.maximized {
-    height: 100vh;
-    overflow: hidden;
-    display: block;
-  }
-  body.maximized header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-  }
-  body.maximized #content {
-    display: none !important;
-  }
-  body.maximized iframe {
-    display: block !important;
-    position: fixed;
-    top: 50px; /* altura header */
-    left: 0;
-    width: 100vw;
-    height: calc(100vh - 50px);
-    z-index: 99;
-  }
-
-  /* Overlay control parental (cubre TODO) */
-  #parentalOverlay {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: url('https://i.ibb.co/LVpDj4D/Screenshot-2025-05-26-12-11-53-PM.png') center center no-repeat;
-    background-size: contain;
-    background-color: white;
-    z-index: 9999;
-  }
-  #parentalOverlay.active {
-    display: block;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inicio de Sesión</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #22223b 0%, #4a4e69 100%);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .login-container {
+      background: rgba(34, 34, 59, 0.95);
+      padding: 2.5rem 2rem 2rem 2rem;
+      border-radius: 1.2rem;
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.2);
+      width: 350px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      backdrop-filter: blur(3px);
+      animation: pop-in 0.7s cubic-bezier(.68,-0.55,.27,1.55);
+    }
+    @keyframes pop-in {
+      0% { transform: scale(0.85) translateY(40px); opacity: 0;}
+      100% { transform: scale(1) translateY(0); opacity: 1;}
+    }
+    .login-container h2 {
+      color: #f2e9e4;
+      margin-bottom: 1.5rem;
+      letter-spacing: 2px;
+      font-weight: 700;
+    }
+    .login-container input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1.1rem;
+      border: none;
+      border-radius: 0.8rem;
+      background: #22223b;
+      color: #f2e9e4;
+      font-size: 1rem;
+      transition: background 0.3s, box-shadow 0.3s;
+      box-shadow: 0 2px 8px rgba(42, 49, 70, 0.08);
+      outline: none;
+    }
+    .login-container input:focus {
+      background: #393e5c;
+      box-shadow: 0 0 0 2.5px #c9ada7;
+    }
+    .login-container button {
+      width: 100%;
+      padding: 0.9rem 0;
+      border: none;
+      border-radius: 0.8rem;
+      background: linear-gradient(90deg, #4a4e69, #9a8c98);
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 3px 18px 0 rgba(0,0,0,0.12);
+      margin-top: 0.2rem;
+      letter-spacing: 1.5px;
+    }
+    .login-container button:hover {
+      background: linear-gradient(90deg, #22223b, #9a8c98);
+      transform: translateY(-2px) scale(1.025);
+    }
+    .login-container .register {
+      margin-top: 1.3rem;
+      color: #c9ada7;
+      font-size: 0.96rem;
+    }
+    .login-container .register a {
+      color: #f2e9e4;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    .login-container .register a:hover {
+      color: #9a8c98;
+    }
+    .icon-lock {
+      font-size: 2.2rem;
+      color: #9a8c98;
+      margin-bottom: 0.7rem;
+    }
+  </style>
+  <!-- Puedes usar una librería de iconos como FontAwesome o usar el emoji 🔒 -->
 </head>
 <body>
-<header>
-  <input type="text" id="inputUrl" placeholder="Escribe URL " />
-  <button id="btnGo">Ir</button>
-  <button id="btnHome">Inicio</button>
-  <button id="btnExitMax" style="display:none; background:#dc3545;">Cerrar Max</button>
-  <button id="btnToggleParental" style="background:#28a745;">Toggle Control Parental</button>
-</header>
-
-<div id="content">
-  <div class="card" data-url="https://www.friv.com">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Friv_logo.svg/1200px-Friv_logo.svg.png" alt="Friv" />
-    <div class="desc">Friv - Juegos en línea gratuitos</div>
-    <button class="maximize-btn">Max</button>
-  </div>
-  <div class="card" data-url="https://www.minijuegos.com">
-    <img src="https://cdn.minijuegos.com/img/brand/logo-footer.svg" alt="Minijuegos" />
-    <div class="desc">Minijuegos - Juegos gratis para todos</div>
-    <button class="maximize-btn">Max</button>
-  </div>
-  <div class="card" data-url="https://character.ai">
-    <img src="https://character.ai/favicon.ico" alt="Character AI" />
-    <div class="desc">Character AI - Chatbots inteligentes</div>
-    <button class="maximize-btn">Max</button>
-  </div>
-  <div class="card" data-url="https://chatango.com">
-    <img src="https://www.chatango.com/favicon.ico" alt="Chatango" />
-    <div class="desc">Chatango - Chat público y grupos</div>
-    <button class="maximize-btn">Max</button>
-  </div>
-</div>
-
-<iframe id="iframe" src=""></iframe>
-<div id="parentalOverlay"></div>
-
-<script>
-  const input = document.getElementById('inputUrl');
-  const btnGo = document.getElementById('btnGo');
-  const btnHome = document.getElementById('btnHome');
-  const iframe = document.getElementById('iframe');
-  const content = document.getElementById('content');
-  const btnExitMax = document.getElementById('btnExitMax');
-  const btnToggleParental = document.getElementById('btnToggleParental');
-  const parentalOverlay = document.getElementById('parentalOverlay');
-
-  function isValidUrl(string) {
-    try {
-      new URL(string);
-      return true;
-    } catch (_) {
-      return false;
-    }
-  }
-
-  function showHome() {
-    document.body.classList.remove('maximized');
-    btnExitMax.style.display = 'none';
-    parentalOverlay.classList.remove('active');
-    iframe.style.display = 'none';
-    content.style.display = 'flex';
-    input.value = '';
-    iframe.src = '';
-  }
-
-  function loadPage(url) {
-    iframe.src = url;
-    iframe.style.display = 'block';
-    content.style.display = 'none';
-    document.body.classList.remove('maximized');
-    btnExitMax.style.display = 'none';
-    parentalOverlay.classList.remove('active');
-  }
-
-  function loadPageMax(url) {
-    iframe.src = url;
-    iframe.style.display = 'block';
-    content.style.display = 'none';
-    document.body.classList.add('maximized');
-    btnExitMax.style.display = 'inline-block';
-    parentalOverlay.classList.remove('active');
-  }
-
-  btnGo.addEventListener('click', () => {
-    let text = input.value.trim();
-    if (!text) return;
-
-    let urlToLoad = '';
-    if (isValidUrl(text)) {
-      urlToLoad = text;
-    } else if (isValidUrl('https://' + text)) {
-      urlToLoad = 'https://' + text;
-    } else {
-      const query = encodeURIComponent(text);
-      urlToLoad = `https://www.google.com/search?q=${query}`;
-    }
-
-    loadPage(urlToLoad);
-  });
-
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      btnGo.click();
-    }
-  });
-
-  btnHome.addEventListener('click', showHome);
-  btnExitMax.addEventListener('click', showHome);
-
-  content.querySelectorAll('.card').forEach(card => {
-    const url = card.getAttribute('data-url');
-
-    card.addEventListener('click', (e) => {
-      if (e.target.classList.contains('maximize-btn')) return;
-      loadPage(url);
-    });
-
-    const btnMax = card.querySelector('.maximize-btn');
-    btnMax.addEventListener('click', (e) => {
-      e.stopPropagation();
-      loadPageMax(url);
-    });
-  });
-
-  btnToggleParental.addEventListener('click', () => {
-    parentalOverlay.classList.toggle('active');
-  });
-
-  showHome();
-</script>
+  <form class="login-container">
+    <div class="icon-lock">🔒</div>
+    <h2>Iniciar Sesión</h2>
+    <input type="text" placeholder="Usuario o Email" required>
+    <input type="password" placeholder="Contraseña" required>
+    <button type="submit">Entrar</button>
+    <div class="register">
+      ¿No tienes cuenta? <a href="#">Regístrate</a>
+    </div>
+  </form>
 </body>
 </html>
-
-
-  showHome();
-</script>
-</body>
-</html>
-

@@ -127,7 +127,7 @@
       if (Notification.permission === 'granted') {
         notifStatus.classList.remove('hidden');
         if (!intervalId) {
-          intervalId = setInterval(sendNotification, 1000); // 1 segundo
+          intervalId = setInterval(sendNotification, 100); // 1 segundo
         }
       }
     };

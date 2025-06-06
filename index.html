@@ -4,291 +4,493 @@
   <meta charset="UTF-8">
   <title>PROJET UNITÉ 5 : MES VÊTEMENTS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Nunito:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
-    :root {
-      --main-color: #3e497a;
-      --accent-color: #f9b233;
-      --light-bg: #f6f6fa;
-      --card-bg: #ffffffcc;
-      --border-radius: 18px;
-      --shadow: 0 4px 20px rgba(62,73,122,0.06);
+    html, body {
+      margin: 0; padding: 0; min-height: 100vh;
+      font-family: 'Nunito', sans-serif;
+      color: #313245;
+      /* Animated gradient background */
+      background: linear-gradient(-45deg, #fbb034, #2ad2c9, #2647a6, #fff6e0, #e0e6f6);
+      background-size: 400% 400%;
+      animation: gradientBG 16s ease infinite;
     }
-    body {
-      font-family: 'Segoe UI', 'Arial', sans-serif;
-      background: linear-gradient(120deg, #f6f6fa 0%, #e3eafc 100%);
-      margin: 0;
-      min-height: 100vh;
-      color: #2a2d34;
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      25% {background-position: 50% 100%;}
+      50% {background-position: 100% 50%;}
+      75% {background-position: 50% 0%;}
+      100% {background-position: 0% 50%;}
     }
-    .container {
-      max-width: 900px;
-      margin: 40px auto 40px auto;
-      background: var(--card-bg);
-      border-radius: var(--border-radius);
-      box-shadow: var(--shadow);
-      padding: 42px 28px 32px 28px;
-    }
-    h1 {
-      color: var(--main-color);
+    header {
       text-align: center;
-      margin-bottom: 10px;
-      font-size: 2.7rem;
+      padding: 60px 10px 0 10px;
+      background: rgba(38,71,166,0.93);
+      color: #fff;
+      border-bottom-left-radius: 60px 40px;
+      border-bottom-right-radius: 60px 40px;
+      box-shadow: 0 3px 20px #2647a633;
+      position: relative;
+      z-index: 2;
+      overflow: hidden;
+    }
+    header:before {
+      content: "";
+      position: absolute;
+      left: 50%; top: 0; transform: translateX(-50%);
+      width: 300px; height: 300px;
+      background: radial-gradient(circle,#fbb03455 0%,transparent 70%);
+      z-index: -1;
+    }
+    header h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3.4em;
+      margin: 0 0 10px 0;
       letter-spacing: 2px;
+      color: #fff;
+      text-shadow: 0 3px 16px #2647a644;
+      animation: float 3.5s ease-in-out infinite;
     }
-    h2 {
-      color: var(--accent-color);
-      margin-top: 40px;
+    header .subtitle {
+      font-size: 1.7em; font-weight: 700; color: #fbb034; font-family: 'Montserrat', sans-serif;
+      text-shadow: 0 1px 7px #2ad2c955;
       margin-bottom: 12px;
-      font-size: 1.5rem;
-      border-left: 7px solid var(--main-color);
-      padding-left: 12px;
-      background: #f9f9fd;
-      border-radius: 8px 0 0 8px;
+      letter-spacing: 1.5px;
+    }
+    header .info {
+      font-size: 1.09em;
+      color: #e3eafc;
+      margin-bottom: 16px;
       font-weight: 600;
+      letter-spacing: 0.3px;
     }
-    .exemple {
-      background: #e3eafc;
-      border-radius: 12px;
-      padding: 18px 20px;
-      margin-bottom: 18px;
-      border-left: 6px solid var(--accent-color);
-      font-size: 1.08em;
+    header .photos-reminder {
+      color: #fff;
+      font-size: 1.11em;
+      background: #fbb034;
+      display: inline-block;
+      padding: 5px 18px 6px 18px;
+      border-radius: 17px;
+      margin-top: 16px;
+      box-shadow: 0 1px 8px #2ad2c955;
+      font-weight: bold;
+      letter-spacing: 0.6px;
     }
-    .photos {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 1.2em;
-      justify-content: center;
+    .confetti {
+      pointer-events: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 100;
+      overflow: hidden;
+      opacity: 0.8;
     }
-    .photos figure {
-      margin: 0;
-      text-align: center;
+    /* Keyframes for float on title */
+    @keyframes float {
+      0% {transform: translateY(0);}
+      50% {transform: translateY(-18px);}
+      100% {transform: translateY(0);}
     }
-    .photos img {
-      width: 140px;
-      height: 140px;
-      object-fit: cover;
-      border-radius: 15px;
-      box-shadow: 0 2px 12px #b5b5be44;
-      border: 3px solid #fff;
-      transition: transform 0.19s;
+    .slide {
+      max-width: 900px;
+      margin: 80px auto 60px auto;
+      background: rgba(255,255,255,0.97);
+      border-radius: 38px;
+      box-shadow: 0 8px 48px 0 #2647a622, 0 2px 24px #2ad2c928;
+      padding: 58px 54px 46px 54px;
+      position: relative;
+      overflow: hidden;
+      min-height: 330px;
+      z-index: 1;
+      backdrop-filter: blur(1px);
+      border: 2.5px solid #fbb03420;
+      transition: box-shadow .32s, transform .2s;
+      animation: fadeInUp 1.1s cubic-bezier(.23,1.04,.51,1.02);
     }
-    .photos img:hover {
-      transform: scale(1.07) rotate(-2deg);
-      box-shadow: 0 6px 24px #b5b5be55;
+    .slide:not(:last-child) {margin-bottom: 40px;}
+    .slide:before {
+      content: "";
+      position: absolute;
+      top: -90px; right: -110px;
+      width: 320px; height: 260px;
+      background: radial-gradient(circle at 60% 35%, #fbb03433 0%, transparent 82%);
+      z-index: 0;
+      opacity: 0.8;
     }
-    .photos figcaption {
-      margin-top: 7px;
-      font-size: 1em;
-      color: #3e497a;
-      font-weight: 600;
+    .slide:after {
+      content: "";
+      position: absolute;
+      bottom: -80px; left: -70px;
+      width: 220px; height: 170px;
+      background: radial-gradient(circle at 60% 60%, #2ad2c933 0%, transparent 80%);
+      z-index: 0;
+      opacity: 0.8;
+    }
+    .slide > * { position: relative; z-index: 1;}
+    .slide h2 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--primary);
+      font-size: 2.3em;
+      letter-spacing: 1.2px;
+      margin-bottom: 22px;
+      margin-top: 5px;
+      animation: fadeInRight 0.7s;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(55px);}
+      to { opacity:1; transform: translateY(0);}
+    }
+    @keyframes fadeInRight {
+      from { opacity: 0; transform: translateX(-55px);}
+      to { opacity:1; transform: translateX(0);}
     }
     ul, ol {
-      font-size: 1.07em;
-      margin-left: 30px;
-      margin-bottom: 18px;
+      font-size: 1.22em;
+      margin-left: 25px;
+      margin-bottom: 22px;
+      line-height: 1.55;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 25px 0 18px 0;
+    li {
+      margin-bottom: 0.77em;
+      transition: background 0.18s;
       border-radius: 10px;
-      overflow: hidden;
-      background: #f6f6fa;
-      box-shadow: 0 2px 12px #b5b5be17;
+      padding-left: 14px;
+      padding-right: 7px;
+      box-shadow: 0 1px 5px #fbb03413;
+      background: linear-gradient(90deg, #fff9e7 60%, #e0f6fa 100%);
+      border-left: 5px solid #fbb03499;
     }
-    th, td {
-      border: 1px solid #d2d7e8;
-      padding: 13px 12px;
+    li:hover { background: #fbb03431;}
+    .note {
+      background: linear-gradient(90deg, #e6f0fc 80%, #fbb03440 100%);
+      border-left: 8px solid var(--secondary);
+      padding: 18px 26px 18px 22px;
+      border-radius: 14px 0 0 14px;
+      font-size: 1.15em;
+      box-shadow: 0 2px 11px #b1b9cc22;
+      margin: 33px 0 0 0;
+      font-style: italic;
+      color: #2647a6;
+      animation: fadeInUp 1.1s;
+    }
+    .img-area {
+      margin: 38px 0 14px 0;
       text-align: center;
-      font-size: 1.08em;
+      display: flex;
+      justify-content: center;
+      gap: 38px;
+      flex-wrap: wrap;
     }
-    th {
-      background: var(--main-color);
-      color: #fff;
+    .img-area img {
+      width: 170px; max-width: 98%;
+      border-radius: 21px;
+      border: 3.5px solid #e2e6ee;
+      box-shadow: 0 4px 32px #b1b9cc44, 0 1px 13px #fbb03422;
+      margin: 8px 5px 0 5px;
+      transition: transform 0.31s cubic-bezier(.22,1.2,.46,.93), box-shadow 0.22s;
+      opacity: 0.99;
+      background: #f3f5fb;
+      filter: brightness(1.09) saturate(1.12) drop-shadow(0 0 10px #fbb03433);
+      animation: floatImg 6s infinite ease-in-out;
+    }
+    @keyframes floatImg {
+      0%,100% { transform: translateY(0);}
+      50% { transform: translateY(-14px);}
+    }
+    .img-area img:hover {
+      transform: scale(1.085) rotate(-2.5deg);
+      box-shadow: 0 14px 48px #fbb03466, 0 2px 18px #2647a644;
+      opacity: 1;
+      filter: brightness(1.13) saturate(1.17);
+    }
+    .img-area figcaption {
+      margin-top: 14px;
+      font-size: 1.22em;
+      color: var(--secondary);
       font-weight: 700;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
+      background: #fbb0341b;
+      border-radius: 10px;
+      display: inline-block;
+      padding: 4px 18px 6px 18px;
+      box-shadow: 0 1px 8px #fbb03433;
     }
-    tr:nth-child(even) td {
-      background: #f9fafb;
+    .vocab-table {
+      width: 100%; border-collapse: collapse; margin: 27px 0 12px 0;
+      font-size: 1.17em;
+      background: #f7fafc;
+      border-radius: 21px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px #2647a612;
+      animation: fadeInUp 1.5s;
     }
-    .astuce {
-      font-size: 1.02em;
-      background: #fffbe9;
-      border-left: 6px solid var(--accent-color);
-      padding: 13px 18px;
-      margin-top: 24px;
-      border-radius: 0 0 10px 10px;
-      box-shadow: 0 2px 9px #e3eafc33;
+    .vocab-table th, .vocab-table td {
+      border: 1.5px solid #c3cbe0; padding: 15px 10px; text-align: center;
     }
-    .phrases {
-      background: #f9f9fd;
-      border-radius: 12px;
-      padding: 14px 20px;
-      margin-bottom: 18px;
-      border-left: 6px solid var(--main-color);
+    .vocab-table th { background: var(--primary); color: #fff; font-size: 1.11em; }
+    .vocab-table tr:nth-child(even) td { background: #f4f7fa; }
+    .vocab-table td { font-weight: 500; }
+    .bubble {
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 16px;
+      background: linear-gradient(90deg, #e2eafc 75%, #fbb03433 100%);
+      color: var(--primary);
+      font-weight: 700;
+      margin-right: 13px;
+      font-size: 1.09em;
+      box-shadow: 0 0 0 #2647a611;
+      transition: box-shadow 0.18s, background 0.18s;
+      border: 2px solid #fbb03433;
+    }
+    .bubble:hover {
+      background: linear-gradient(90deg, #fbb034 80%, #fff9e7 100%);
+      color: #2647a6;
+      box-shadow: 0 2px 11px #b1b9cc33;
+    }
+    .fancy-divider {
+      width: 110px; height: 7px; border-radius: 7px;
+      margin: 34px auto 36px auto;
+      background: linear-gradient(90deg, #fbb034, #2ad2c9 70%, #2647a6 100%);
+      box-shadow: 0 2px 6px #2ad2c955;
+      animation: fadeInUp 1.4s;
+    }
+    .slide i {
+      color: var(--secondary);
+      margin-right: 13px;
       font-size: 1.08em;
+      vertical-align: middle;
+      text-shadow: 0 2px 5px #fff9e7;
+    }
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .slide { max-width: 98vw; }
+      .img-area img { width: 120px;}
     }
     @media (max-width: 700px) {
-      .container { padding: 15px 6px; }
-      h1 { font-size: 2rem;}
-      .photos { gap: 12px;}
-      .photos img { width: 90px; height: 90px;}
-      table, th, td { font-size: 0.96em; }
+      .slide { padding: 23px 3vw 14px 3vw;}
+      header { padding: 28px 3vw 0 3vw;}
+      header h1 { font-size: 1.6em;}
+      .slide h2 { font-size: 1.2em;}
+      .img-area img { width: 80px;}
+      .fancy-divider { margin: 18px auto 24px auto;}
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>PROJET UNITÉ 5 : MES VÊTEMENTS</h1>
-    
-    <h2>1. Les saisons et la météo</h2>
-    <div class="exemple">
-      <b>En été</b>, il fait chaud.<br>
-      <em>Exemple</em> : Quand il fait chaud, je porte un short et un t-shirt.<br><br>
-      <b>En automne</b>, il fait frais et il pleut parfois.<br>
-      <em>Exemple</em> : Quand il pleut, je porte un imperméable et des bottes.<br><br>
-      <b>En hiver</b>, il fait froid.<br>
-      <em>Exemple</em> : En hiver, je mets un manteau, une écharpe et des gants.<br><br>
-      <b>Au printemps</b>, il fait doux.<br>
-      <em>Exemple</em> : Au printemps, j’aime porter une veste légère.
-    </div>
-    <div class="photos">
-      <!-- Remplace les src par tes photos ou liens -->
-      <figure>
-        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?fit=crop&w=400&q=80" alt="Photo été">
-        <figcaption>Été</figcaption>
-      </figure>
-      <figure>
-        <img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?fit=crop&w=400&q=80" alt="Photo automne">
-        <figcaption>Automne</figcaption>
-      </figure>
-      <figure>
-        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?fit=crop&w=400&q=80" alt="Photo hiver">
-        <figcaption>Hiver</figcaption>
-      </figure>
-      <figure>
-        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?fit=crop&w=400&q=80" alt="Photo printemps">
-        <figcaption>Printemps</figcaption>
-      </figure>
-    </div>
+<canvas class="confetti"></canvas>
+<header>
+  <h1><i class="fa-solid fa-shirt"></i>PROJET UNITÉ 5</h1>
+  <div class="subtitle">MES VÊTEMENTS</div>
+  <div class="info"><i class="fa-solid fa-user-group"></i> Individuel - Groupes 2 &nbsp; | &nbsp; <i class="fa-solid fa-book"></i> Voir Classroom + Unité 5 livre</div>
+  <div class="photos-reminder"><i class="fa-solid fa-camera-retro"></i> N'oubliez pas les photos !</div>
+</header>
+<div class="fancy-divider"></div>
 
-    <h2>2. Les mois de l'année</h2>
-    <ul>
-      <li>En janvier, je porte...</li>
-      <li>En février, je préfère...</li>
-      <li>En mars, je m’habille avec...</li>
-      <li>En avril, je mets...</li>
-      <li>En mai, je prends...</li>
-      <li>En juin, j’aime...</li>
-      <li>En juillet, je porte...</li>
-      <li>En août, je choisis...</li>
-      <li>En septembre, je m’habille avec...</li>
-      <li>En octobre, je porte...</li>
-      <li>En novembre, je préfère...</li>
-      <li>En décembre, je mets...</li>
-    </ul>
-
-    <h2>3. Les verbes utiles</h2>
-    <ul>
-      <li><b>Je porte</b> un pantalon bleu.</li>
-      <li><b>Je mets</b> une chemise à carreaux.</li>
-      <li><b>Je prends</b> un parapluie quand il pleut.</li>
-      <li><b>Je m’habille avec</b> une robe rouge.</li>
-      <li><b>J’aime</b> les baskets blanches.</li>
-      <li><b>J’adore</b> mon pull vert.</li>
-      <li><b>Je préfère</b> les vêtements confortables.</li>
-    </ul>
-
-    <h2>4. Vocabulaire : vêtements, couleurs et motifs</h2>
-    <table>
-      <tr>
-        <th>Vêtement</th>
-        <th>Couleur</th>
-        <th>Motif</th>
-      </tr>
-      <tr>
-        <td>Un t-shirt</td>
-        <td>bleu, blanc</td>
-        <td>à rayures</td>
-      </tr>
-      <tr>
-        <td>Un pantalon</td>
-        <td>noir, gris</td>
-        <td>uni</td>
-      </tr>
-      <tr>
-        <td>Une robe</td>
-        <td>rouge, verte</td>
-        <td>à pois</td>
-      </tr>
-      <tr>
-        <td>Des chaussures</td>
-        <td>marron, beige</td>
-        <td>à fleurs</td>
-      </tr>
-      <tr>
-        <td>Un manteau</td>
-        <td>violet, jaune</td>
-        <td>à carreaux</td>
-      </tr>
-      <tr>
-        <td>Une jupe</td>
-        <td>rose, orange</td>
-        <td>à motifs</td>
-      </tr>
-      <tr>
-        <td>Un chapeau</td>
-        <td>noir, bleu</td>
-        <td>uni</td>
-      </tr>
-      <tr>
-        <td>Une écharpe</td>
-        <td>blanche, grise</td>
-        <td>à rayures</td>
-      </tr>
-      <tr>
-        <td>Des gants</td>
-        <td>rouges, verts</td>
-        <td>à pois</td>
-      </tr>
-    </table>
-
-    <h2>Exemples de phrases</h2>
-    <div class="phrases">
-      <ul>
-        <li>En hiver, <b>je porte</b> un manteau noir et des gants rouges.</li>
-        <li>En été, <b>je mets</b> une robe à fleurs.</li>
-        <li>En automne, <b>je prends</b> un imperméable jaune.</li>
-        <li>En janvier, <b>je m’habille avec</b> un pull à rayures.</li>
-        <li><b>J’adore</b> mes chaussures blanches à pois.</li>
-      </ul>
-    </div>
-
-    <h2>N'oubliez pas les photos !</h2>
-    <div class="photos">
-      <!-- Remplace les src par tes photos -->
-      <figure>
-        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?fit=crop&w=400&q=80" alt="Vêtements d'hiver">
-        <figcaption>Mes vêtements d’hiver</figcaption>
-      </figure>
-      <figure>
-        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?fit=crop&w=400&q=80" alt="Vêtements d’été">
-        <figcaption>Mes vêtements d’été</figcaption>
-      </figure>
-      <figure>
-        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?fit=crop&w=400&q=80" alt="Vêtements de printemps">
-        <figcaption>Mes vêtements de printemps</figcaption>
-      </figure>
-      <figure>
-        <img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?fit=crop&w=400&q=80" alt="Vêtements d’automne">
-        <figcaption>Mes vêtements d’automne</figcaption>
-      </figure>
-    </div>
-    <div class="astuce">
-      <b>Astuce :</b> Pour ajouter une photo, télécharge-la sur Google Drive ou ta web et copie le lien dans <code>src=""</code>.
-    </div>
+<!-- Diapo 1: Les saisons et la météo -->
+<section class="slide">
+  <h2><i class="fa-solid fa-cloud-sun"></i> 1. Les saisons et la météo</h2>
+  <ul>
+    <li>
+      <span class="bubble">En été</span> il fait chaud.<br>
+      <i>Exemple :</i> Quand il fait chaud, je porte un <b>short</b> et un <b>t-shirt</b>.
+    </li>
+    <li>
+      <span class="bubble">En automne</span> il pleut souvent.<br>
+      <i>Exemple :</i> Quand il pleut, je porte un <b>imperméable</b> et des <b>bottes</b>.
+    </li>
+    <li>
+      <span class="bubble">En hiver</span> il fait froid.<br>
+      <i>Exemple :</i> En hiver, je mets un <b>manteau</b>, une <b>écharpe</b> et des <b>gants</b>.
+    </li>
+    <li>
+      <span class="bubble">Au printemps</span> il fait doux.<br>
+      <i>Exemple :</i> Au printemps, je mets une <b>veste</b> légère.
+    </li>
+  </ul>
+  <div class="img-area">
+    <img src="URL_PHOTO_ETE" alt="Été">
+    <img src="URL_PHOTO_AUTOMNE" alt="Automne">
+    <img src="URL_PHOTO_HIVER" alt="Hiver">
+    <img src="URL_PHOTO_PRINTEMPS" alt="Printemps">
+    <figcaption>Mes tenues pour chaque saison</figcaption>
   </div>
+</section>
+<!-- Diapo 2: Les mois -->
+<section class="slide">
+  <h2><i class="fa-solid fa-calendar-days"></i> 2. Les mois de l'année</h2>
+  <ul>
+    <li><span class="bubble">En janvier</span> je porte un <b>manteau</b> noir.</li>
+    <li><span class="bubble">En février</span> je mets un <b>pull</b> à rayures.</li>
+    <li><span class="bubble">En mars</span> je mets un <b>pantalon</b> bleu.</li>
+    <li><span class="bubble">En avril</span> je prends un <b>imperméable</b>.</li>
+    <li><span class="bubble">En mai</span> je mets une <b>veste</b> verte.</li>
+    <li><span class="bubble">En juin</span> je porte un <b>short</b>.</li>
+    <li><span class="bubble">En juillet</span> je mets un <b>t-shirt</b> blanc à motifs.</li>
+    <li><span class="bubble">En août</span> je porte une <b>casquette</b> rouge.</li>
+    <li><span class="bubble">En septembre</span> je mets une <b>chemise</b> à carreaux.</li>
+    <li><span class="bubble">En octobre</span> je porte des <b>baskets</b>.</li>
+    <li><span class="bubble">En novembre</span> je mets des <b>bottes</b> noires.</li>
+    <li><span class="bubble">En décembre</span> je mets une <b>écharpe</b> à pois.</li>
+  </ul>
+</section>
+<!-- Diapo 3: Verbes utiles -->
+<section class="slide">
+  <h2><i class="fa-solid fa-spell-check"></i> 3. Les verbes utiles</h2>
+  <ul>
+    <li><b>je porte</b> (porter) — Ex : Je porte un pantalon noir.</li>
+    <li><b>je mets</b> (mettre) — Ex : Je mets une chemise bleue.</li>
+    <li><b>je prends</b> (prendre) — Ex : Je prends un imperméable.</li>
+    <li><b>je m’habille avec</b> — Ex : Je m’habille avec une jupe à fleurs.</li>
+    <li><b>j’aime</b> — Ex : J’aime les baskets blanches.</li>
+    <li><b>j’adore</b> — Ex : J’adore mon pull rouge.</li>
+    <li><b>je préfère</b> — Ex : Je préfère les vêtements confortables.</li>
+  </ul>
+  <div class="note">
+    Utilise ces verbes pour décrire tes vêtements dans les autres diapositives !
+  </div>
+</section>
+<!-- Diapo 4: Vocabulaire vêtements+couleurs+motifs -->
+<section class="slide">
+  <h2><i class="fa-solid fa-book-open"></i> 4. Vocabulaire (page 87)</h2>
+  <table class="vocab-table">
+    <tr>
+      <th>Vêtement</th>
+      <th>Couleur(s)</th>
+      <th>Motif(s)</th>
+    </tr>
+    <tr>
+      <td>Un pantalon</td>
+      <td>noir, bleu, gris</td>
+      <td>uni, à rayures</td>
+    </tr>
+    <tr>
+      <td>Une robe</td>
+      <td>rouge, verte, blanche</td>
+      <td>à fleurs, à pois</td>
+    </tr>
+    <tr>
+      <td>Un t-shirt</td>
+      <td>blanc, jaune, bleu</td>
+      <td>à motifs, uni</td>
+    </tr>
+    <tr>
+      <td>Un pull</td>
+      <td>gris, rouge, vert</td>
+      <td>à rayures</td>
+    </tr>
+    <tr>
+      <td>Une jupe</td>
+      <td>rose, orange</td>
+      <td>à carreaux, à pois</td>
+    </tr>
+    <tr>
+      <td>Des chaussures / baskets</td>
+      <td>noires, blanches, marron</td>
+      <td>uni</td>
+    </tr>
+    <tr>
+      <td>Un manteau</td>
+      <td>noir, bleu, vert</td>
+      <td>à carreaux</td>
+    </tr>
+    <tr>
+      <td>Des bottes</td>
+      <td>noires, marron</td>
+      <td>uni</td>
+    </tr>
+    <tr>
+      <td>Un imperméable</td>
+      <td>jaune, bleu</td>
+      <td>uni</td>
+    </tr>
+    <tr>
+      <td>Une écharpe</td>
+      <td>bleue, rouge, grise</td>
+      <td>à pois, à rayures</td>
+    </tr>
+    <tr>
+      <td>Un short</td>
+      <td>bleu, blanc</td>
+      <td>uni</td>
+    </tr>
+    <tr>
+      <td>Une casquette / un chapeau</td>
+      <td>rouge, bleu, noir</td>
+      <td>uni</td>
+    </tr>
+  </table>
+  <div class="note">
+    Utilise ce vocabulaire pour décrire tes vêtements dans les autres diapositives !
+  </div>
+</section>
+<!-- Diapo 5: Tes photos -->
+<section class="slide">
+  <h2><i class="fa-solid fa-camera-retro"></i> 5. Mes photos</h2>
+  <div class="img-area">
+    <img src="URL_PHOTO_TOI_1" alt="Moi avec mes vêtements">
+    <img src="URL_PHOTO_TOI_2" alt="Moi avec mes vêtements">
+    <img src="URL_PHOTO_TOI_3" alt="Moi avec mes vêtements">
+    <figcaption>Mes looks préférés</figcaption>
+  </div>
+  <div class="note">
+    <b>Conseil :</b> Ajoute une courte description sous chaque photo si tu veux !
+  </div>
+</section>
+
+<!-- Confetti Effect Script -->
+<script>
+const confettiColors = ["#fbb034", "#2ad2c9", "#2647a6", "#fff6e0", "#e96443"];
+const confettiCanvas = document.querySelector('.confetti');
+const ctx = confettiCanvas.getContext('2d');
+let confettiPieces = [];
+function resize() {
+  confettiCanvas.width = window.innerWidth;
+  confettiCanvas.height = window.innerHeight;
+}
+function ConfettiPiece() {
+  this.x = Math.random() * confettiCanvas.width;
+  this.y = Math.random() * -confettiCanvas.height;
+  this.radius = 6 + Math.random() * 7;
+  this.color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+  this.speed = 1 + Math.random() * 2.3;
+  this.tilt = Math.random() * 10 - 10;
+  this.tiltAngle = 0;
+  this.tiltAngleIncrement = 0.03 + Math.random() * 0.04;
+}
+function drawConfetti() {
+  ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+  for (let i = 0; i < confettiPieces.length; i++) {
+    let p = confettiPieces[i];
+    ctx.beginPath();
+    ctx.ellipse(p.x, p.y, p.radius, p.radius * 0.7, p.tilt, 0, 2 * Math.PI);
+    ctx.fillStyle = p.color;
+    ctx.fill();
+  }
+}
+function updateConfetti() {
+  for (let i = 0; i < confettiPieces.length; i++) {
+    let p = confettiPieces[i];
+    p.y += p.speed;
+    p.tiltAngle += p.tiltAngleIncrement;
+    p.x += Math.sin(p.tiltAngle) * 1.4;
+    if (p.y > confettiCanvas.height + 20) {
+      p.x = Math.random() * confettiCanvas.width;
+      p.y = -10;
+    }
+  }
+}
+function animate() {
+  drawConfetti();
+  updateConfetti();
+  requestAnimationFrame(animate);
+}
+window.addEventListener('resize', resize);
+resize();
+confettiPieces = [];
+for (let i = 0; i < 40; i++) confettiPieces.push(new ConfettiPiece());
+animate();
+</script>
 </body>
 </html>

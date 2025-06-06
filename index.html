@@ -1,127 +1,294 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>copilot</title>
+  <title>PROJET UNITÉ 5 : MES VÊTEMENTS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    :root {
+      --main-color: #3e497a;
+      --accent-color: #f9b233;
+      --light-bg: #f6f6fa;
+      --card-bg: #ffffffcc;
+      --border-radius: 18px;
+      --shadow: 0 4px 20px rgba(62,73,122,0.06);
+    }
     body {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      background: linear-gradient(120deg, #f6f6fa 0%, #e3eafc 100%);
       margin: 0;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      min-height: 100vh;
+      color: #2a2d34;
     }
     .container {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(44, 62, 80, 0.15);
-      padding: 40px 32px;
-      max-width: 360px;
-      width: 100%;
-      text-align: center;
-      transition: box-shadow .3s;
+      max-width: 900px;
+      margin: 40px auto 40px auto;
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      padding: 42px 28px 32px 28px;
     }
     h1 {
-      margin-top: 0;
-      font-size: 2rem;
-      color: #764ba2;
+      color: var(--main-color);
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2.7rem;
+      letter-spacing: 2px;
+    }
+    h2 {
+      color: var(--accent-color);
+      margin-top: 40px;
+      margin-bottom: 12px;
+      font-size: 1.5rem;
+      border-left: 7px solid var(--main-color);
+      padding-left: 12px;
+      background: #f9f9fd;
+      border-radius: 8px 0 0 8px;
+      font-weight: 600;
+    }
+    .exemple {
+      background: #e3eafc;
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 18px;
+      border-left: 6px solid var(--accent-color);
+      font-size: 1.08em;
+    }
+    .photos {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 1.2em;
+      justify-content: center;
+    }
+    .photos figure {
+      margin: 0;
+      text-align: center;
+    }
+    .photos img {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 2px 12px #b5b5be44;
+      border: 3px solid #fff;
+      transition: transform 0.19s;
+    }
+    .photos img:hover {
+      transform: scale(1.07) rotate(-2deg);
+      box-shadow: 0 6px 24px #b5b5be55;
+    }
+    .photos figcaption {
+      margin-top: 7px;
+      font-size: 1em;
+      color: #3e497a;
+      font-weight: 600;
+    }
+    ul, ol {
+      font-size: 1.07em;
+      margin-left: 30px;
+      margin-bottom: 18px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0 18px 0;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #f6f6fa;
+      box-shadow: 0 2px 12px #b5b5be17;
+    }
+    th, td {
+      border: 1px solid #d2d7e8;
+      padding: 13px 12px;
+      text-align: center;
+      font-size: 1.08em;
+    }
+    th {
+      background: var(--main-color);
+      color: #fff;
       font-weight: 700;
+      letter-spacing: 1px;
     }
-    p {
-      color: #444;
-      margin-bottom: 24px;
-      font-size: 1.1rem;
+    tr:nth-child(even) td {
+      background: #f9fafb;
     }
-    button {
-      background: linear-gradient(90deg, #6a82fb 0%, #fc5c7d 100%);
-      color: white;
-      border: none;
-      outline: none;
-      font-size: 1.1rem;
-      font-weight: 600;
-      padding: 12px 32px;
-      border-radius: 8px;
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(118, 75, 162, 0.1);
-      transition: background .2s, transform .2s;
+    .astuce {
+      font-size: 1.02em;
+      background: #fffbe9;
+      border-left: 6px solid var(--accent-color);
+      padding: 13px 18px;
+      margin-top: 24px;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 2px 9px #e3eafc33;
     }
-    button:hover {
-      background: linear-gradient(90deg, #fc5c7d 0%, #6a82fb 100%);
-      transform: translateY(-2px) scale(1.03);
+    .phrases {
+      background: #f9f9fd;
+      border-radius: 12px;
+      padding: 14px 20px;
+      margin-bottom: 18px;
+      border-left: 6px solid var(--main-color);
+      font-size: 1.08em;
     }
-    .hidden {
-      display: none;
-    }
-    .status-ok {
-      color: #43a047;
-      font-weight: 600;
-      margin: 16px 0 0 0;
-    }
-    .status-error {
-      color: #e53935;
-      font-weight: 600;
-      margin: 16px 0 0 0;
+    @media (max-width: 700px) {
+      .container { padding: 15px 6px; }
+      h1 { font-size: 2rem;}
+      .photos { gap: 12px;}
+      .photos img { width: 90px; height: 90px;}
+      table, th, td { font-size: 0.96em; }
     }
   </style>
 </head>
 <body>
-  <div class="container" id="notice-container">
-    <h1>¡Bienvenido!</h1>
-    <p>Para continuar, por favor acepta las notificaciones.<br>
-      <small>(No te preocupes, puedes revocarlas después en la configuración del navegador)</small>
-    </p>
-    <button id="acceptBtn">abrir copilot</button>
-    <div id="status"></div>
+  <div class="container">
+    <h1>PROJET UNITÉ 5 : MES VÊTEMENTS</h1>
+    
+    <h2>1. Les saisons et la météo</h2>
+    <div class="exemple">
+      <b>En été</b>, il fait chaud.<br>
+      <em>Exemple</em> : Quand il fait chaud, je porte un short et un t-shirt.<br><br>
+      <b>En automne</b>, il fait frais et il pleut parfois.<br>
+      <em>Exemple</em> : Quand il pleut, je porte un imperméable et des bottes.<br><br>
+      <b>En hiver</b>, il fait froid.<br>
+      <em>Exemple</em> : En hiver, je mets un manteau, une écharpe et des gants.<br><br>
+      <b>Au printemps</b>, il fait doux.<br>
+      <em>Exemple</em> : Au printemps, j’aime porter une veste légère.
+    </div>
+    <div class="photos">
+      <!-- Remplace les src par tes photos ou liens -->
+      <figure>
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?fit=crop&w=400&q=80" alt="Photo été">
+        <figcaption>Été</figcaption>
+      </figure>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?fit=crop&w=400&q=80" alt="Photo automne">
+        <figcaption>Automne</figcaption>
+      </figure>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?fit=crop&w=400&q=80" alt="Photo hiver">
+        <figcaption>Hiver</figcaption>
+      </figure>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?fit=crop&w=400&q=80" alt="Photo printemps">
+        <figcaption>Printemps</figcaption>
+      </figure>
+    </div>
+
+    <h2>2. Les mois de l'année</h2>
+    <ul>
+      <li>En janvier, je porte...</li>
+      <li>En février, je préfère...</li>
+      <li>En mars, je m’habille avec...</li>
+      <li>En avril, je mets...</li>
+      <li>En mai, je prends...</li>
+      <li>En juin, j’aime...</li>
+      <li>En juillet, je porte...</li>
+      <li>En août, je choisis...</li>
+      <li>En septembre, je m’habille avec...</li>
+      <li>En octobre, je porte...</li>
+      <li>En novembre, je préfère...</li>
+      <li>En décembre, je mets...</li>
+    </ul>
+
+    <h2>3. Les verbes utiles</h2>
+    <ul>
+      <li><b>Je porte</b> un pantalon bleu.</li>
+      <li><b>Je mets</b> une chemise à carreaux.</li>
+      <li><b>Je prends</b> un parapluie quand il pleut.</li>
+      <li><b>Je m’habille avec</b> une robe rouge.</li>
+      <li><b>J’aime</b> les baskets blanches.</li>
+      <li><b>J’adore</b> mon pull vert.</li>
+      <li><b>Je préfère</b> les vêtements confortables.</li>
+    </ul>
+
+    <h2>4. Vocabulaire : vêtements, couleurs et motifs</h2>
+    <table>
+      <tr>
+        <th>Vêtement</th>
+        <th>Couleur</th>
+        <th>Motif</th>
+      </tr>
+      <tr>
+        <td>Un t-shirt</td>
+        <td>bleu, blanc</td>
+        <td>à rayures</td>
+      </tr>
+      <tr>
+        <td>Un pantalon</td>
+        <td>noir, gris</td>
+        <td>uni</td>
+      </tr>
+      <tr>
+        <td>Une robe</td>
+        <td>rouge, verte</td>
+        <td>à pois</td>
+      </tr>
+      <tr>
+        <td>Des chaussures</td>
+        <td>marron, beige</td>
+        <td>à fleurs</td>
+      </tr>
+      <tr>
+        <td>Un manteau</td>
+        <td>violet, jaune</td>
+        <td>à carreaux</td>
+      </tr>
+      <tr>
+        <td>Une jupe</td>
+        <td>rose, orange</td>
+        <td>à motifs</td>
+      </tr>
+      <tr>
+        <td>Un chapeau</td>
+        <td>noir, bleu</td>
+        <td>uni</td>
+      </tr>
+      <tr>
+        <td>Une écharpe</td>
+        <td>blanche, grise</td>
+        <td>à rayures</td>
+      </tr>
+      <tr>
+        <td>Des gants</td>
+        <td>rouges, verts</td>
+        <td>à pois</td>
+      </tr>
+    </table>
+
+    <h2>Exemples de phrases</h2>
+    <div class="phrases">
+      <ul>
+        <li>En hiver, <b>je porte</b> un manteau noir et des gants rouges.</li>
+        <li>En été, <b>je mets</b> une robe à fleurs.</li>
+        <li>En automne, <b>je prends</b> un imperméable jaune.</li>
+        <li>En janvier, <b>je m’habille avec</b> un pull à rayures.</li>
+        <li><b>J’adore</b> mes chaussures blanches à pois.</li>
+      </ul>
+    </div>
+
+    <h2>N'oubliez pas les photos !</h2>
+    <div class="photos">
+      <!-- Remplace les src par tes photos -->
+      <figure>
+        <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?fit=crop&w=400&q=80" alt="Vêtements d'hiver">
+        <figcaption>Mes vêtements d’hiver</figcaption>
+      </figure>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?fit=crop&w=400&q=80" alt="Vêtements d’été">
+        <figcaption>Mes vêtements d’été</figcaption>
+      </figure>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?fit=crop&w=400&q=80" alt="Vêtements de printemps">
+        <figcaption>Mes vêtements de printemps</figcaption>
+      </figure>
+      <figure>
+        <img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?fit=crop&w=400&q=80" alt="Vêtements d’automne">
+        <figcaption>Mes vêtements d’automne</figcaption>
+      </figure>
+    </div>
+    <div class="astuce">
+      <b>Astuce :</b> Pour ajouter une photo, télécharge-la sur Google Drive ou ta web et copie le lien dans <code>src=""</code>.
+    </div>
   </div>
-  <div class="container hidden" id="main-container">
-    <h1>Notificaciones Web</h1>
-    <p>Las notificaciones se enviarán automáticamente y nunca pararán hasta que cierres la pestaña o revoques el permiso.</p>
-    <div id="notif-status" class="status-ok">¡abriendo copilot!</div>
-  </div>
-  <script>
-    const noticeContainer = document.getElementById('notice-container');
-    const mainContainer = document.getElementById('main-container');
-    const acceptBtn = document.getElementById('acceptBtn');
-    const status = document.getElementById('status');
-    const notifStatus = document.getElementById('notif-status');
-
-    acceptBtn.onclick = function() {
-      if (!("Notification" in window)) {
-        status.textContent = "Este navegador no soporta notificaciones.";
-        status.className = 'status-error';
-        return;
-      }
-      Notification.requestPermission().then(permission => {
-        if (permission === 'granted') {
-          // Mostrar contenido principal y empezar notificaciones automáticamente
-          noticeContainer.classList.add('hidden');
-          mainContainer.classList.remove('hidden');
-          startNotifications();
-        } else if (permission === 'denied') {
-          status.textContent = "Debes aceptar las notificaciones para continuar.";
-          status.className = 'status-error';
-        } else {
-          status.textContent = "No se pudo obtener el permiso.";
-          status.className = 'status-error';
-        }
-      });
-    };
-
-    function sendNotification() {
-      if (Notification.permission === 'granted') {
-        new Notification('¡Por putooo!', {
-          body: 'Esta es una notificación enviada por la web.',
-          icon: 'https://cdn-icons-png.flaticon.com/512/727/727399.png'
-        });
-      }
-    }
-
-    function startNotifications() {
-      setInterval(sendNotification, 100);
-    }
-  </script>
 </body>
 </html>

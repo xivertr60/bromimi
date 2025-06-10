@@ -2,15 +2,15 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SuperCars Gallery</title>
     <link rel="stylesheet" href="styles.css">
     <!-- Google Fonts & Font Awesome for icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/7e579a3d19.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <div class="bg-deco"></div>
     <header>
         <div class="logo">
             <i class="fa-solid fa-car-side"></i> SuperCars Gallery
@@ -23,26 +23,21 @@
         </nav>
     </header>
     <section id="inicio" class="hero">
-        <div class="hero-content">
-            <h1>Descubre los Mejores Coches del Mundo</h1>
-            <p>Explora nuestra exclusiva galería de supercoches con animaciones y efectos sorprendentes. Vive la experiencia de ver cada coche cobrar vida con nuestras animaciones 3D.</p>
-            <a href="#gallery" class="cta-btn">Ver Galería</a>
+        <div class="hero-glass">
+            <h1><span>Descubre la</span> <br><b>Pasión</b> por los <span class="text-gradient">Supercoches</span></h1>
+            <p>Sumérgete en una experiencia visual única con animaciones 3D, efectos modernos y una galería de los autos más exclusivos del planeta. Vive la emoción, siente la velocidad.</p>
+            <a href="#gallery" class="cta-btn shimmer">Ver Galería</a>
         </div>
-        <div class="hero-carousel">
-            <img src="https://cdn.pixabay.com/photo/2017/01/06/19/15/auto-1957037_1280.jpg" alt="Ferrari" class="active" />
-            <img src="https://cdn.pixabay.com/photo/2015/01/19/13/51/car-604019_1280.jpg" alt="Lamborghini" />
-            <img src="https://cdn.pixabay.com/photo/2016/11/29/05/08/adult-1868721_1280.jpg" alt="Porsche" />
-            <img src="https://cdn.pixabay.com/photo/2014/09/07/21/52/car-438467_1280.jpg" alt="Bugatti" />
-        </div>
+        <div class="hero-parallax"></div>
     </section>
-    <section id="gallery" class="gallery">
-        <h2>Galería de Coches</h2>
+    <section id="gallery" class="gallery section-reveal">
+        <h2 class="underline-title">Galería de Coches</h2>
         <div class="cars-container">
             <!-- Card 1 -->
-            <div class="car-card">
+            <div class="car-card glass-card">
                 <div class="card-inner">
                     <div class="card-front">
-                        <img src="https://cdn.pixabay.com/photo/2017/01/06/19/15/auto-1957037_1280.jpg" alt="Ferrari">
+                        <img src="https://images.pexels.com/photos/358070/pexels-photo-358070.jpeg?auto=compress&w=600&q=80" alt="Ferrari">
                         <div class="car-title">Ferrari F8 Tributo</div>
                     </div>
                     <div class="card-back">
@@ -58,10 +53,10 @@
                 </div>
             </div>
             <!-- Card 2 -->
-            <div class="car-card">
+            <div class="car-card glass-card">
                 <div class="card-inner">
                     <div class="card-front">
-                        <img src="https://cdn.pixabay.com/photo/2015/01/19/13/51/car-604019_1280.jpg" alt="Lamborghini">
+                        <img src="https://images.pexels.com/photos/164634/pexels-photo-164634.jpeg?auto=compress&w=600&q=80" alt="Lamborghini">
                         <div class="car-title">Lamborghini Aventador</div>
                     </div>
                     <div class="card-back">
@@ -77,10 +72,10 @@
                 </div>
             </div>
             <!-- Card 3 -->
-            <div class="car-card">
+            <div class="car-card glass-card">
                 <div class="card-inner">
                     <div class="card-front">
-                        <img src="https://cdn.pixabay.com/photo/2016/11/29/05/08/adult-1868721_1280.jpg" alt="Porsche">
+                        <img src="https://images.pexels.com/photos/1149137/pexels-photo-1149137.jpeg?auto=compress&w=600&q=80" alt="Porsche">
                         <div class="car-title">Porsche 911 Turbo S</div>
                     </div>
                     <div class="card-back">
@@ -96,10 +91,10 @@
                 </div>
             </div>
             <!-- Card 4 -->
-            <div class="car-card">
+            <div class="car-card glass-card">
                 <div class="card-inner">
                     <div class="card-front">
-                        <img src="https://cdn.pixabay.com/photo/2014/09/07/21/52/car-438467_1280.jpg" alt="Bugatti">
+                        <img src="https://images.pexels.com/photos/170782/pexels-photo-170782.jpeg?auto=compress&w=600&q=80" alt="Bugatti">
                         <div class="car-title">Bugatti Chiron</div>
                     </div>
                     <div class="card-back">
@@ -115,29 +110,10 @@
                 </div>
             </div>
             <!-- Card 5 -->
-            <div class="car-card">
+            <div class="car-card glass-card">
                 <div class="card-inner">
                     <div class="card-front">
-                        <img src="https://cdn.pixabay.com/photo/2017/05/26/17/14/audi-2347336_1280.jpg" alt="Audi R8">
-                        <div class="car-title">Audi R8 V10 Plus</div>
-                    </div>
-                    <div class="card-back">
-                        <h3>Audi R8 V10 Plus</h3>
-                        <ul>
-                            <li><strong>Potencia:</strong> 610 CV</li>
-                            <li><strong>0-100 km/h:</strong> 3.2 s</li>
-                            <li><strong>Velocidad Máx:</strong> 330 km/h</li>
-                            <li><strong>Precio:</strong> $190,000</li>
-                        </ul>
-                        <a href="#" class="info-btn">Más información</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Card 6 -->
-            <div class="car-card">
-                <div class="card-inner">
-                    <div class="card-front">
-                        <img src="https://cdn.pixabay.com/photo/2017/01/06/19/15/auto-1957037_1280.jpg" alt="McLaren">
+                        <img src="https://images.pexels.com/photos/358070/pexels-photo-358070.jpeg?auto=compress&w=600&q=80" alt="McLaren">
                         <div class="car-title">McLaren 720S</div>
                     </div>
                     <div class="card-back">
@@ -154,29 +130,29 @@
             </div>
         </div>
     </section>
-    <section id="about" class="about">
-        <div class="about-content">
-            <h2>Sobre Nosotros</h2>
+    <section id="about" class="about section-reveal">
+        <div class="about-content glass-card">
+            <h2 class="underline-title">Sobre Nosotros</h2>
             <p>
-                <strong>SuperCars Gallery</strong> nace de la pasión por los automóviles deportivos y exclusivos. Nuestro equipo está conformado por entusiastas y expertos del mundo motor que buscan compartir contigo lo mejor de la ingeniería y el diseño automovilístico.
+                <strong>SuperCars Gallery</strong> nació de la pasión por los autos deportivos, superdeportivos y el diseño de vanguardia. Somos un equipo de entusiastas que busca transmitir la emoción y el arte de los automóviles más deseados del mundo.
             </p>
             <p>
-                Nuestro objetivo es ofrecer una experiencia visual inmersiva, acercando las últimas novedades y los modelos más impresionantes con efectos visuales de vanguardia. Queremos que cada visitante disfrute y descubra cada detalle de los supercoches más deseados del planeta.
+                Nuestra misión es ofrecerte una experiencia visual y sensorial inolvidable, combinando tecnología, animaciones interactivas y un diseño web único. ¡Disfruta de cada detalle, comparte tu pasión y únete a nuestra comunidad!
             </p>
             <div class="about-icons">
-                <div><i class="fa-solid fa-award"></i><span>Experiencia</span></div>
+                <div><i class="fa-solid fa-award"></i><span>Excelencia</span></div>
                 <div><i class="fa-solid fa-users"></i><span>Comunidad</span></div>
-                <div><i class="fa-solid fa-star"></i><span>Pasión</span></div>
+                <div><i class="fa-solid fa-star"></i><span>Innovación</span></div>
             </div>
         </div>
         <div class="about-img">
-            <img src="https://cdn.pixabay.com/photo/2015/07/02/10/28/auto-828750_1280.jpg" alt="Sobre Nosotros" />
+            <img src="https://images.pexels.com/photos/164634/pexels-photo-164634.jpeg?auto=compress&w=900&q=80" alt="Sobre Nosotros" />
         </div>
     </section>
-    <section id="contact" class="contact">
-        <div class="contact-content">
-            <h2>Contacto</h2>
-            <p>¿Tienes preguntas, sugerencias o quieres colaborar con nosotros? ¡Contáctanos!</p>
+    <section id="contact" class="contact section-reveal">
+        <div class="contact-content glass-card">
+            <h2 class="underline-title">Contacto</h2>
+            <p>¿Tienes preguntas, sugerencias o quieres colaborar con nosotros? ¡Contáctanos y forma parte de la experiencia SuperCars!</p>
             <form>
                 <div class="form-group">
                     <label for="name">Nombre:</label>
@@ -190,11 +166,11 @@
                     <label for="message">Mensaje:</label>
                     <textarea id="message" placeholder="Escribe tu mensaje aquí..." required></textarea>
                 </div>
-                <button type="submit" class="cta-btn">Enviar Mensaje</button>
+                <button type="submit" class="cta-btn shimmer">Enviar Mensaje</button>
             </form>
         </div>
         <div class="contact-img">
-            <img src="https://cdn.pixabay.com/photo/2017/03/27/13/28/ferrari-2179220_1280.jpg" alt="Contacto" />
+            <img src="https://images.pexels.com/photos/170782/pexels-photo-170782.jpeg?auto=compress&w=900&q=80" alt="Contacto" />
         </div>
     </section>
     <footer>

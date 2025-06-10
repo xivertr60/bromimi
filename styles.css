@@ -1,56 +1,49 @@
 :root {
-    --primary: #16181d;
-    --secondary: #22252c;
+    --primary: #14151b;
+    --secondary: #23242b;
     --accent: #ff1053;
     --accent2: #00f2fe;
+    --luxury: #fff6;
     --text: #fff;
-    --card-bg: rgba(22, 24, 29, 0.85);
-    --glass: rgba(255,255,255,0.09);
-    --shadow: 0 8px 32px 0 rgba(0,0,0,0.40);
-    --glow: 0 0 12px #ff105380, 0 0 32px #00f2fe40;
+    --glass: rgba(25, 27, 36, 0.72);
+    --shadow: 0 8px 28px 0 rgba(0,0,0,0.34);
+    --glow: 0 0 14px #ff1053, 0 0 32px #00f2fe80;
     --gradient: linear-gradient(90deg, #ff1053 0%, #00f2fe 100%);
+    --gradient-dark: linear-gradient(120deg, #11131a 70%, #0f0f1a 100%);
     --radius: 26px;
-    --deco1: #ff10533c;
-    --deco2: #00f2fe3c;
-    --deco3: #fff1;
-    --form-bg: rgba(255,255,255,0.09);
+    --form-bg: rgba(255,255,255,0.07);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* Fondo canvas partículas */
+#particles-bg {
+    position: fixed;
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+    top: 0; left: 0;
+    pointer-events: none;
+}
 
 body {
     font-family: 'Montserrat', Arial, sans-serif;
-    background: linear-gradient(135deg, #16181d 0%, #23272f 100%);
+    background: var(--gradient-dark);
     color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
-}
-
-/* Background decorations */
-.bg-deco {
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    z-index: 0;
-    pointer-events: none;
-    background:
-        radial-gradient(circle 430px at 80% 10%, var(--deco2), transparent 70%),
-        radial-gradient(circle 380px at 10% 90%, var(--deco1), transparent 70%),
-        linear-gradient(120deg, #ff10530f 30%, #00f2fe11 100%);
-    opacity: 0.52;
 }
 
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 26px 9vw 18px 9vw;
-    background: var(--primary);
+    padding: 26px 9vw 16px 9vw;
+    background: rgba(18, 19, 27, 0.68);
     box-shadow: 0 2px 24px #000a;
     position: sticky;
     top: 0;
-    z-index: 20;
+    z-index: 10;
     border-bottom: 1.5px solid #fff1;
-    backdrop-filter: blur(8px) saturate(1.2);
+    backdrop-filter: blur(10px) saturate(1.2);
 }
 
 .logo {
@@ -70,7 +63,7 @@ nav a {
     text-decoration: none;
     font-weight: 700;
     margin-left: 32px;
-    font-size: 1.13rem;
+    font-size: 1.17rem;
     transition: color 0.35s;
     position: relative;
     letter-spacing: 1px;
@@ -92,58 +85,55 @@ nav a:hover::after {
     width: 100%;
 }
 
+/* HERO */
 .hero {
     position: relative;
-    min-height: 85vh;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    min-height: 92vh;
     background: none;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
-.hero-glass {
-    position: relative;
+.hero-content {
     z-index: 3;
     margin-left: 10vw;
     max-width: 560px;
-    padding: 48px 38px 42px 38px;
-    background: var(--glass);
+    padding: 46px 40px 42px 46px;
     border-radius: var(--radius);
+    background: var(--glass);
     box-shadow: 0 8px 40px #0008, 0 0 44px #ff105322;
-    backdrop-filter: blur(14px) saturate(1.2);
     border: 2.5px solid #fff3;
-    margin-top: 10vh;
+    margin-top: 8vh;
     margin-bottom: 10vh;
-    animation: fadeinUp 1.3s cubic-bezier(.62,1.44,.72,.97);
+    animation: fadeinUp 1.2s cubic-bezier(.62,1.44,.72,.97);
+    backdrop-filter: blur(16px) saturate(1.1);
 }
-.hero-glass h1 {
+.neon-title {
     font-family: 'Orbitron', cursive;
-    font-size: 3.2rem;
+    font-size: 3.4rem;
     color: var(--accent);
     margin-bottom: 22px;
-    text-shadow: var(--glow);
+    text-shadow: 0 0 6px #ff1053, 0 0 30px #00f2fe60;
     letter-spacing: 4px;
-    line-height: 1.18;
+    line-height: 1.13;
 }
-.hero-glass h1 span {
+.neon-title span {
+    color: var(--accent2);
+    -webkit-text-stroke: 1px #fff4;
+    text-shadow: 0 0 19px #00f2fe, 0 0 8px #fff4;
+}
+.neon-title b {
     color: #fff;
-    font-size: 2.1rem;
-    font-family: inherit;
-    letter-spacing: 1.5px;
+    letter-spacing: 3px;
+    filter: brightness(1.3);
 }
-.hero-glass .text-gradient {
-    background: var(--gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-.hero-glass p {
-    font-size: 1.24rem;
+.hero-content p {
+    font-size: 1.23rem;
     margin-bottom: 38px;
-    color: #fff;
+    color: #e8e8e8;
     text-shadow: 0 2px 10px #000a;
-    opacity: 0.92;
+    opacity: 0.97;
 }
 .cta-btn {
     display: inline-block;
@@ -152,10 +142,10 @@ nav a:hover::after {
     font-weight: bold;
     padding: 15px 38px;
     border-radius: 32px;
-    font-size: 1.15rem;
+    font-size: 1.17rem;
     letter-spacing: 2px;
     text-decoration: none;
-    box-shadow: var(--shadow), var(--glow);
+    box-shadow: 0 0 38px #ff105333, 0 0 34px #00f2fe55;
     border: none;
     cursor: pointer;
     transition: transform 0.18s, box-shadow 0.18s, filter 0.2s;
@@ -163,41 +153,47 @@ nav a:hover::after {
     position: relative;
     overflow: hidden;
 }
-.cta-btn.shimmer::after {
-    content: "";
-    position: absolute;
-    top: 0; left: -75px;
-    width: 68px; height: 100%;
-    background: linear-gradient(120deg, #fff2 20%, #fff7 60%, #fff2 100%);
-    transform: skewX(-24deg);
-    animation: shimmer 1.8s infinite linear;
-    pointer-events: none;
-}
-@keyframes shimmer {
-    0% { left: -75px; }
-    100% { left: 110%; }
+.neon-btn {
+    box-shadow: 0 0 18px #ff1053, 0 0 34px #00f2fe88, 0 0 18px #fff4;
+    border: 2.5px solid #fff2;
+    text-shadow: 0 0 11px #fff7;
 }
 .cta-btn:hover {
-    transform: scale(1.07) translateY(-2px);
-    box-shadow: 0 0 40px 0 #ff105366, 0 0 40px #00f2fe44, var(--glow);
-    filter: brightness(1.18) saturate(1.14);
+    transform: scale(1.08) translateY(-2px) rotate(-1deg);
+    filter: brightness(1.23) saturate(1.12);
+    box-shadow: 0 0 60px #00f2fe99, 0 0 60px #ff105388;
 }
 
-.hero-parallax {
-    position: absolute;
-    z-index: 2;
-    right: 0; top: 0;
-    width: 62vw;
-    height: 100vh;
-    background: url('https://images.pexels.com/photos/358070/pexels-photo-358070.jpeg?auto=compress&w=1200&q=80') center center/cover no-repeat;
-    opacity: 0.25;
-    filter: blur(2px) brightness(0.9) saturate(1.3);
-    clip-path: polygon(8% 0, 100% 0, 100% 100%, 0 100%);
-    animation: parallaxBG 35s linear infinite alternate;
+.hero-car {
+    z-index: 4;
+    flex: 1 1 0;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    margin-right: 3vw;
+    margin-top: 32px;
+    min-width: 300px;
+    pointer-events: none;
 }
-@keyframes parallaxBG {
-    0% { background-position: center 0; }
-    100% { background-position: center 40px; }
+.hero-car img {
+    width: 520px;
+    max-width: 48vw;
+    filter: drop-shadow(0 24px 60px #00f2fe80) drop-shadow(0 0 16px #fff6) brightness(1.19) saturate(1.18);
+    transition: transform 1.9s cubic-bezier(.28,1.44,.52,.97);
+    animation: carFloat 6s infinite ease-in-out alternate;
+}
+@keyframes carFloat {
+    0% { transform: translateY(0) scale(1) rotate(-2deg);}
+    100% { transform: translateY(-26px) scale(1.02) rotate(1deg);}
+}
+
+/* SVG Hero Wave */
+.hero-wave {
+    position: absolute;
+    left: 0; right: 0; bottom: -1px;
+    width: 100vw;
+    z-index: 2;
+    pointer-events: none;
 }
 
 .underline-title {
@@ -220,30 +216,46 @@ nav a:hover::after {
     border-radius: 2px;
 }
 
+/* GALERIA */
 .gallery {
     padding: 90px 10vw 65px 10vw;
-    background: linear-gradient(90deg, #151a22f4 70%, #23272f 100%);
-    box-shadow: 0 4px 40px #0007 inset;
+    background: linear-gradient(90deg, #151a22f6 70%, #23272f 100%);
+    box-shadow: 0 4px 40px #0008 inset;
+    z-index: 2;
+    position: relative;
 }
 .cars-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 46px;
+    gap: 48px;
     justify-content: center;
+    position: relative;
+    z-index: 2;
 }
 
-/* Glass effect Card + 3D Flip Animation */
-.glass-card {
-    background: var(--card-bg);
-    backdrop-filter: blur(14px) saturate(1.1);
+/* Tarjetas de lujo - Glass, flip, reflejo */
+.luxury {
+    background: var(--glass);
+    box-shadow: 0 8px 40px #00f2fe22, 0 0 28px #0007, 0 0 26px #ff105322;
     border-radius: var(--radius);
-    border: 2px solid #fff2;
-    box-shadow: 0 2px 34px #0005, 0 0 18px #ff105322;
+    border: 2.5px solid #fff3;
+    position: relative;
+    overflow: visible;
 }
-
+.luxury::after {
+    content:"";
+    position: absolute;
+    bottom: -28px; left: 16px; right: 16px;
+    height: 16px;
+    border-radius: 100px;
+    background: radial-gradient(ellipse at center, #fff4 10%, #00f2fe11 80%, transparent 100%);
+    filter: blur(3px);
+    z-index: 0;
+    pointer-events: none;
+}
 .car-card {
-    width: 350px;
-    height: 430px;
+    width: 340px;
+    height: 420px;
     perspective: 1400px;
     border-radius: var(--radius);
     cursor: pointer;
@@ -252,8 +264,9 @@ nav a:hover::after {
     overflow: visible;
 }
 .car-card:hover, .car-card:focus-within {
-    box-shadow: 0 8px 80px #ff105333, 0 0 32px #00f2fe22, 0 0 44px #fff2 inset;
+    box-shadow: 0 8px 80px #ff105344, 0 0 42px #00f2fe44;
     z-index: 2;
+    filter: brightness(1.10) saturate(1.19);
 }
 .card-inner {
     position: relative;
@@ -273,7 +286,7 @@ nav a:hover::after {
     backface-visibility: hidden;
     border-radius: var(--radius);
     overflow: hidden;
-    background: rgba(21, 26, 34, 0.98);
+    background: var(--glass);
     box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
@@ -289,15 +302,15 @@ nav a:hover::after {
     border-top-right-radius: var(--radius);
     box-shadow: 0 6px 30px #0008;
     transition: filter 0.3s;
-    filter: brightness(1.12) saturate(1.27);
+    filter: brightness(1.12) saturate(1.27) contrast(1.06);
 }
 .car-card:hover .card-front img {
-    filter: brightness(1.22) saturate(1.5) drop-shadow(0 0 18px #ff1053cc);
+    filter: brightness(1.25) saturate(1.6) drop-shadow(0 0 18px #ff1053cc);
 }
 .car-title {
-    font-size: 1.32rem;
+    font-size: 1.22rem;
     font-weight: bold;
-    padding: 20px 0 32px 0;
+    padding: 18px 0 28px 0;
     color: #fff;
     text-shadow: 0 2px 10px #000b;
     font-family: 'Orbitron', cursive;
@@ -316,18 +329,18 @@ nav a:hover::after {
 .card-back h3 {
     font-family: 'Orbitron', cursive;
     color: var(--accent2);
-    font-size: 1.4rem;
-    margin-bottom: 18px;
+    font-size: 1.32rem;
+    margin-bottom: 14px;
     letter-spacing: 1px;
     text-shadow: var(--glow);
 }
 .card-back ul {
     list-style: none;
-    margin-bottom: 23px;
+    margin-bottom: 18px;
 }
 .card-back li {
     margin-bottom: 7px;
-    font-size: 1.08rem;
+    font-size: 1.03rem;
     text-shadow: 0 1px 7px #000b;
 }
 .info-btn {
@@ -335,34 +348,35 @@ nav a:hover::after {
     background: var(--gradient);
     color: #fff;
     font-weight: bold;
-    padding: 10px 22px;
+    padding: 9px 22px;
     border-radius: 22px;
     font-size: 1rem;
     text-decoration: none;
     box-shadow: 0 0 16px #00f2fe44;
-    transition: transform 0.15s, box-shadow 0.15s;
     border: none;
+    transition: transform 0.20s, box-shadow 0.15s;
 }
 .info-btn:hover {
-    transform: scale(1.07);
+    transform: scale(1.09);
     box-shadow: 0 0 30px #00f2fe88;
 }
 
+/* SOBRE NOSOTROS */
 .about {
     background: linear-gradient(90deg, #0c0c0c 60%, #181a22 100%);
     padding: 90px 10vw 65px 10vw;
     display: flex;
     align-items: center;
-    gap: 65px;
+    gap: 70px;
 }
 .about-content {
     max-width: 540px;
-    padding: 38px 30px 32px 32px;
+    padding: 38px 34px 32px 34px;
 }
-.about h2 { margin-bottom: 12px; }
+.about h2 { margin-bottom: 10px; }
 .about p {
-    font-size: 1.18rem;
-    margin-bottom: 18px;
+    font-size: 1.16rem;
+    margin-bottom: 14px;
     color: #eee;
 }
 .about-icons {
@@ -386,26 +400,27 @@ nav a:hover::after {
     width: 360px;
     max-width: 38vw;
     border-radius: var(--radius);
-    box-shadow: 0 4px 38px #0008, 0 0 18px #00f2fe22;
-    filter: brightness(1.06) saturate(1.11);
+    box-shadow: 0 4px 38px #000a, 0 0 18px #00f2fe22;
+    filter: brightness(1.09) saturate(1.13);
 }
 
+/* CONTACTO */
 .contact {
-    background: linear-gradient(90deg, #181a22 70%, #0c0c0c 100%);
+    background: linear-gradient(90deg, #181a22 70%, #16171d 100%);
     padding: 90px 10vw 65px 10vw;
     display: flex;
     align-items: center;
-    gap: 65px;
+    gap: 70px;
 }
 .contact-content {
     max-width: 540px;
-    padding: 38px 30px 32px 32px;
+    padding: 38px 34px 32px 34px;
 }
-.contact h2 { margin-bottom: 12px; }
+.contact h2 { margin-bottom: 10px; }
 .contact p {
-    font-size: 1.16rem;
+    font-size: 1.13rem;
     color: #eee;
-    margin-bottom: 28px;
+    margin-bottom: 25px;
 }
 form {
     background: var(--form-bg);
@@ -451,10 +466,11 @@ form textarea {
     width: 360px;
     max-width: 38vw;
     border-radius: var(--radius);
-    box-shadow: 0 4px 38px #0008, 0 0 18px #ff105322;
+    box-shadow: 0 4px 38px #000a, 0 0 18px #ff105322;
     filter: brightness(1.08) saturate(1.13);
 }
 
+/* FOOTER */
 footer {
     background: var(--primary);
     padding: 34px 10vw;
@@ -478,7 +494,7 @@ footer .socials a:hover {
     filter: drop-shadow(var(--glow));
 }
 
-/* Scroll reveal effect for sections */
+/* Animaciones de entrada */
 .section-reveal {
     opacity: 0;
     transform: translateY(80px) scale(0.97);
@@ -490,16 +506,24 @@ footer .socials a:hover {
     transform: translateY(0) scale(1);
 }
 
+.glass {
+    background: var(--glass);
+    backdrop-filter: blur(16px) saturate(1.14);
+    border-radius: var(--radius);
+    border: 2px solid #fff2;
+    box-shadow: 0 2px 34px #0005, 0 0 18px #ff105322;
+}
+
 @media (max-width: 1200px) {
     .about, .contact { gap: 22px; }
     .about-img img, .contact-img img { width: 230px; max-width: 44vw; }
-    .hero-parallax { width: 54vw; }
+    .hero-car img { width: 320px; max-width: 54vw; }
 }
 @media (max-width: 900px) {
     .cars-container { flex-direction: column; align-items: center; }
-    .hero { flex-direction: column; min-height: 60vh; }
-    .hero-glass { margin-left: 0; margin-top: 7vw; margin-bottom: 4vw; }
-    .hero-parallax { display: none; }
+    .hero { flex-direction: column; min-height: 63vh; }
+    .hero-content { margin-left: 0; margin-top: 7vw; margin-bottom: 4vw; }
+    .hero-car { margin-right: 0; }
     .gallery { padding: 50px 4vw 40px 4vw; }
     header, footer { padding: 16px 4vw; }
     .about, .contact {
@@ -510,9 +534,8 @@ footer .socials a:hover {
     .about-img img, .contact-img img { width: 100%; max-width: 94vw; }
 }
 @media (max-width: 650px) {
-    .hero-glass { padding: 18px 8px 18px 8px; }
-    .about-content, .contact-content { padding: 18px 7px 14px 8px; }
-    .car-card, .glass-card { width: 95vw; max-width: 97vw; }
+    .hero-content, .about-content, .contact-content { padding: 18px 7px 14px 8px; }
+    .car-card, .luxury { width: 96vw; max-width: 99vw; }
 }
 @keyframes fadeinUp {
     0% { opacity: 0; transform: translateY(90px) scale(0.97);}
